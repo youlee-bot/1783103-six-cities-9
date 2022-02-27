@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+// import {useState, ChangeEvent} from 'react';
 
+import {offers} from './mock/offers';
 
 const settings = {
   foundResults: 312,
@@ -9,6 +11,6 @@ const settings = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App foundResults={settings.foundResults}/>
+    <App offers={offers} foundResults={settings.foundResults}/>
   </React.StrictMode>,
   document.getElementById('root'));

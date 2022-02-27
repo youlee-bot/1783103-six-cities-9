@@ -1,12 +1,15 @@
-import Card from '../../components/card/card';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
+import CardsList from '../../components/cards-list/cards-list';
+
+import {Offers} from '../../types/offers';
 
 type IndexPageProps = {
   foundResults: number;
+  offers: Offers;
 }
 
-export default function IndexPage({foundResults}: IndexPageProps): JSX.Element {
+export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.Element {
   return (
     <>
       <Header/>
@@ -80,7 +83,7 @@ export default function IndexPage({foundResults}: IndexPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <Card/><Card/><Card/><Card/><Card/>
+                <CardsList offers={offers}/>
               </div>
             </section>
             <div className="cities__right-section">

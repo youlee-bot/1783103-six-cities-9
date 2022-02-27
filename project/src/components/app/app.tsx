@@ -9,21 +9,26 @@ import PrivateRoute from '../../components/private-route/private-route';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute, AuthStatus} from '../../const';
 
+
+import {Offers} from '../../types/offers';
+
+
 type IndexPageProps = {
   foundResults: number;
+  offers: Offers;
 }
 
-export default function App({foundResults}: IndexPageProps): JSX.Element {
+export default function App({foundResults,offers}: IndexPageProps): JSX.Element {
   return (
     <div className="page">
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Root} element={<IndexPage foundResults={foundResults}/>}/>
+          <Route path={AppRoute.Root} element={<IndexPage offers={offers} foundResults={foundResults}/>}/>
           <Route path={AppRoute.Login} element={<Login/>}/>
           <Route path={AppRoute.Property} element={<Property/>}/>
           <Route path={AppRoute.Favorites} element={
             <PrivateRoute authorizationStatus={AuthStatus.Auth}>
-              <Favorites/>
+              <Favorites offers={offers}/>
             </PrivateRoute>
           }
           />

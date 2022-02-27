@@ -1,18 +1,30 @@
-export default function Card() {
+import {Link} from 'react-router-dom';
+
+import {AppRoute} from '../../const';
+
+import {Offer} from '../../types/offers';
+
+type cardProps = {
+  offer:Offer;
+}
+
+export default function Card({offer}: cardProps): JSX.Element  {
+  const linkToOffer = `${AppRoute.Property}/:${offer.id}`;
+
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
-        <span>Premium</span>
+        <span>{offer.category}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/#">
+        <Link to={linkToOffer}>
           <img className="place-card__image" src="../../../img/apartment-01.jpg" width={260} height={200} alt="apartment" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€120</b>
+            <b className="place-card__price-value">€{offer.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -29,9 +41,9 @@ export default function Card() {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href="/#">{offer.title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
