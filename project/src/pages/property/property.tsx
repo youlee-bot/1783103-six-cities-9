@@ -1,9 +1,13 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 
-//import Card from '../../components/card/card';
+import {Offers} from '../../types/offers';
 
-export default function Property() {
+type cardsListProps = {
+  offers: Offers;
+}
+
+export default function Property({offers}:cardsListProps) : JSX.Element {
   return (
     <>
       <Header/>
