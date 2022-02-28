@@ -1,5 +1,8 @@
+import {useParams} from 'react-router-dom';
+
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
+import CommentForm from '../../components/comment-form/comment-form';
 
 import {Offers} from '../../types/offers';
 
@@ -7,7 +10,9 @@ type cardsListProps = {
   offers: Offers;
 }
 
-export default function Property({offers}:cardsListProps) : JSX.Element {
+export default function Property({offers}: cardsListProps): JSX.Element {
+  // eslint-disable-next-line
+  const {id} = useParams();
   return (
     <>
       <Header/>
@@ -176,7 +181,7 @@ export default function Property({offers}:cardsListProps) : JSX.Element {
                     </div>
                   </li>
                 </ul>
-
+                <CommentForm />
               </section>
             </div>
           </div>

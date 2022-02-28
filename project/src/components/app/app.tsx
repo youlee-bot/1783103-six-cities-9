@@ -25,7 +25,7 @@ export default function App({foundResults,offers}: IndexPageProps): JSX.Element 
         <Routes>
           <Route path={AppRoute.Root} element={<IndexPage offers={offers} foundResults={foundResults}/>}/>
           <Route path={AppRoute.Login} element={<Login/>}/>
-          <Route path={AppRoute.Property} element={<Property offers={offers}/>}/>
+          <Route path={AppRoute.PropertyId} element={<Property offers={offers}/>}/>
           <Route path={AppRoute.Favorites} element={
             <PrivateRoute authorizationStatus={AuthStatus.Auth}>
               <Favorites offers={offers}/>

@@ -9,7 +9,7 @@ type cardProps = {
 }
 
 export default function Card({offer}: cardProps): JSX.Element  {
-  const linkToOffer = `${AppRoute.Property}/:${offer.id}`;
+  const linkToOffer = `${AppRoute.Property}/${offer.id}`;
 
   return (
     <article className="cities__place-card place-card">
