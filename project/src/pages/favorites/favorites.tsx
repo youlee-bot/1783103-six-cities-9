@@ -1,8 +1,15 @@
-import Card from '../../components/card/card';
+import FavoritesLocationList from '../../components/favorites-location/favorites-location';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 
-export default function Favorites(): JSX.Element {
+
+import {Offers} from '../../types/offers';
+
+type FavoritesProps = {
+  offers: Offers;
+}
+
+export default function Favorites({offers}: FavoritesProps): JSX.Element {
   return (
     <>
       <Header/>
@@ -11,30 +18,7 @@ export default function Favorites(): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="/#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  <Card/><Card/>
-                </div>
-              </li>
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="/#">
-                      <span>Cologne</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="favorites__places">
-                  <Card/>
-                </div>
-              </li>
+              <FavoritesLocationList offers={offers}/>
             </ul>
           </section>
         </div>

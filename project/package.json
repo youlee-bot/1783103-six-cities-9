@@ -21,6 +21,10 @@
     "lint": "eslint --ext .tsx --ext .ts src/"
   },
   "eslintConfig": {
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": "off"
+    },
     "extends": [
       "react-app",
       "react-app/jest",

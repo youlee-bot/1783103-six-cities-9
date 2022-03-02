@@ -3,7 +3,8 @@ export enum AppRoute {
   Login = '/login',
   Result = '/result',
   Favorites = '/favorites',
-  Property = '/offer'
+  Property = '/offer',
+  PropertyId = '/offer/:id',
 }
 
 export enum AuthStatus {
