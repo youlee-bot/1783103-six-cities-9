@@ -19,4 +19,3 @@ export default function CardsList({offers}: cardsListProps): JSX.Element {
       {offers.map((element) => (<div key={element.id} onMouseOver={()=>setActiveCard(element.id)}><Card offer={element} /></div>))}
     </>);
 }
-
