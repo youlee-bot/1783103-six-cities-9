@@ -1,15 +1,32 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import CardsList from '../../components/cards-list/cards-list';
-
+import Map from '../../components/map/map';
 import {Offers} from '../../types/offers';
+import {CITY} from '../../mock/city';
+
+import {Points} from '../../types/types';
 
 type IndexPageProps = {
   foundResults: number;
   offers: Offers;
 }
 
+const preparePoints = (offers:Offers) => {
+  const points:Points = [];
+
+  offers.forEach((offer) => {
+    points.push(offer.points);
+  });
+
+  return points;
+};
+
+
 export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.Element {
+
+  const points = preparePoints(offers);
+
   return (
     <>
       <Header/>
@@ -87,7 +104,7 @@ export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.E
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"/>
+              <section className="cities__map map"><Map city={CITY} points={points}/></section>
             </div>
           </div>
         </div>
