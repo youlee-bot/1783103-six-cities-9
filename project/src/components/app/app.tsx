@@ -11,21 +11,22 @@ import {AppRoute, AuthStatus} from '../../const';
 
 
 import {Offers} from '../../types/offers';
+import {Reviews} from  '../../types/types';
 
-
-type IndexPageProps = {
+type AppProps = {
   foundResults: number;
   offers: Offers;
+  reviews: Reviews;
 }
 
-export default function App({foundResults,offers}: IndexPageProps): JSX.Element {
+export default function App({foundResults,offers, reviews}: AppProps): JSX.Element {
   return (
     <div className="page">
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Root} element={<IndexPage offers={offers} foundResults={foundResults}/>}/>
           <Route path={AppRoute.Login} element={<Login/>}/>
-          <Route path={AppRoute.PropertyId} element={<Property offers={offers}/>}/>
+          <Route path={AppRoute.PropertyId} element={<Property offers={offers} reviews={reviews}/>}/>
           <Route path={AppRoute.Favorites} element={
             <PrivateRoute authorizationStatus={AuthStatus.Auth}>
               <Favorites offers={offers}/>

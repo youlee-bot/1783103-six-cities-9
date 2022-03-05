@@ -11,3 +11,14 @@ export type Point = {
 };
 
 export type Points = Point[];
+
+export type Review = {
+  reviewId: number;
+  name:string;
+  avatar: string;
+  reviewContent: string;
+  reviewDate: string;
+  offerId: number;
+};
+
+export type Reviews = Review[];

@@ -3,16 +3,34 @@ import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import CommentForm from '../../components/comment-form/comment-form';
+import ReviewList from '../../components/review-list/review-list';
+import CardsList from '../../components/cards-list/cards-list';
 
 import {Offers} from '../../types/offers';
+import {Reviews} from '../../types/types';
+
+import {CardsDisplayType} from '../../const';
 
 type cardsListProps = {
   offers: Offers;
+  reviews: Reviews;
 }
 
-export default function Property({offers}: cardsListProps): JSX.Element {
+const prepareReviews = (reviews: Reviews, id: number): Reviews => {
+  const reviewsList: Reviews = [];
+  reviews.map((review) => {
+    if (review.reviewId === id) {
+      reviewsList.push(review);
+    }
+  });
+  return reviewsList;
+};
+
+
+export default function Property({offers, reviews}: cardsListProps): JSX.Element {
   // eslint-disable-next-line
   const {id} = useParams();
+
   return (
     <>
       <Header/>
@@ -147,41 +165,10 @@ export default function Property({offers}: cardsListProps): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">1</span>
+                  Reviews · <span className="reviews__amount">{reviews.length}</span>
                 </h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src="../project/src/img/avatar-max.jpg"
-                          width={54}
-                          height={54}
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">Max</span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}/>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by
-                        the unique lightness of Amsterdam. The building is green and
-                        from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
-                </ul>
-                <CommentForm />
+                <ReviewList reviews={prepareReviews (reviews, 1)}/>
+                <CommentForm/>
               </section>
             </div>
           </div>
@@ -191,9 +178,7 @@ export default function Property({offers}: cardsListProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {//wip
-                //   <Card />;
-              }
+              <CardsList displayType={CardsDisplayType.Property} offers={offers}/>
             </div>
           </section>
         </div>
