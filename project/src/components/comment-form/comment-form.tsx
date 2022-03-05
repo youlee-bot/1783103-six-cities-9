@@ -1,10 +1,11 @@
 import {useState} from 'react';
 
 export default function CommentForm(): JSX.Element {
+  // eslint-disable-next-line
   const [currentStar, setStar] = useState(0);
+  // eslint-disable-next-line
   const [currentComment, setComment] = useState('');
-// eslint-disable-next-line
-  console.log(currentStar,currentComment); //wip
+
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={(evt) => {console.log(evt);}}>
       <label className="reviews__label form__label" htmlFor="review">

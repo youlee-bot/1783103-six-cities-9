@@ -2,10 +2,13 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
-import {Offers} from '../../types/offers';
+
 import {CITY} from '../../mock/city';
 
+import {Offers} from '../../types/offers';
 import {Points} from '../../types/types';
+
+import {CardsDisplayType} from '../../const';
 
 type IndexPageProps = {
   foundResults: number;
@@ -100,7 +103,7 @@ export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.E
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardsList offers={offers}/>
+                <CardsList displayType={CardsDisplayType.Index} offers={offers}/>
               </div>
             </section>
             <div className="cities__right-section">
