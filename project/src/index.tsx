@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import {store} from './store';
+
 import App from './components/app/app';
 
 import {offers} from './mock/offers';
@@ -11,6 +14,8 @@ const settings = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App offers={offers} reviews={reviews} foundResults={settings.foundResults}/>
+    <Provider store = {store}>
+      <App offers={offers} reviews={reviews} foundResults={settings.foundResults}/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

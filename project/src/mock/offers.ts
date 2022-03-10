@@ -46,7 +46,7 @@ export const offers: Offers = [
     type: 'premium',
     title: 'Canal View Prinsengracht',
     category: 'Apartment',
-    city: 'Amsterdam',
+    city: 'Paris',
     price: 180,
     favorites: false,
     points: {

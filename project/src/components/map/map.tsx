@@ -1,18 +1,21 @@
 import {useRef, useEffect} from 'react';
+import {useAppSelector} from '../../hooks/index';
+
 import 'leaflet/dist/leaflet.css';
 import leaflet from 'leaflet';
 import useMap from '../../hooks/useMap';
-import {City, Points} from '../../types/types';
+import {Points} from '../../types/types';//City, Cities,
 
-import {URL_MARKER_DEFAULT} from '../../const';
+import {URL_MARKER_DEFAULT} from '../../const/const';
 
 type MapProps = {
-  city: City;
   points: Points;
 };
 
 export default function Map(props: MapProps): JSX.Element {
-  const {points, city} = props;
+  const {points} = props;
+
+  const city = useAppSelector((state) => state.currentCity);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

@@ -1,7 +1,7 @@
 import Card from '../../components/card/card';
 import {Offers} from '../../types/offers';
 
-import {CardsDisplayType} from '../../const';
+import {CardsDisplayType} from '../../const/const';
 
 type favoritesLocationProps = {
   offers: Offers;

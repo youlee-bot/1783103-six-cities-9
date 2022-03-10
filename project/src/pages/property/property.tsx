@@ -9,7 +9,7 @@ import CardsList from '../../components/cards-list/cards-list';
 import {Offers} from '../../types/offers';
 import {Reviews} from '../../types/types';
 
-import {CardsDisplayType} from '../../const';
+import {CardsDisplayType} from '../../const/const';
 
 type cardsListProps = {
   offers: Offers;
