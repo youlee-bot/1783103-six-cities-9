@@ -20,7 +20,7 @@ export default function MenuList(): JSX.Element {
       {cititesList.map((city) => (
         <li className="locations__item" key={city.title}>
           <a className={currentCity.title === city.title ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} href="#" onClick={()=>dispatch(changeCity(cityInfo(city.title)))}>
-            <span>{city}</span>
+            <span>{city.title}</span>
           </a>
         </li>),
       )}
