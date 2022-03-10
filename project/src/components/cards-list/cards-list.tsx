@@ -6,7 +6,7 @@ import {Offers} from '../../types/offers';
 
 import {CardsDisplayType} from '../../const/const';
 
-import {changefoundResults} from '../../store/action';
+import {changeFoundResults, changeCurrentOffers} from '../../store/action';
 
 type cardsListProps = {
   offers: Offers;
@@ -30,7 +30,8 @@ export default function CardsList({offers, displayType}: cardsListProps): JSX.El
           offersToDisplay.push(element);
         }
       });
-      dispatch(changefoundResults(offersToDisplay.length));
+      dispatch(changeFoundResults(offersToDisplay.length));
+      dispatch(changeCurrentOffers(offersToDisplay));
       break;
     case (CardsDisplayType.Property):
       articleClassName = 'near-places__card place-card';

@@ -5,7 +5,6 @@ import Map from '../../components/map/map';
 import MenuList from '../../components/menu-list/menu-list';
 
 import {Offers} from '../../types/offers';
-import {Points} from '../../types/types';
 
 import {CardsDisplayType} from '../../const/const';
 
@@ -16,20 +15,9 @@ type IndexPageProps = {
   offers: Offers;
 }
 
-const preparePoints = (offers:Offers) => {
-  const points:Points = [];
-
-  offers.forEach((offer) => {
-    points.push(offer.points);
-  });
-
-  return points;
-};
-
-
 export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.Element {
   //const currentCity = useAppSelector((state) => state.city);
-  const points = preparePoints(offers);
+
 
   return (
     <>
@@ -77,7 +65,7 @@ export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.E
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map points={points}/></section>
+              <section className="cities__map map"><Map /></section>
             </div>
           </div>
         </div>

@@ -4,18 +4,27 @@ import {useAppSelector} from '../../hooks/index';
 import 'leaflet/dist/leaflet.css';
 import leaflet from 'leaflet';
 import useMap from '../../hooks/useMap';
-import {Points} from '../../types/types';//City, Cities,
+import {Points} from '../../types/types';
 
 import {URL_MARKER_DEFAULT} from '../../const/const';
 
-type MapProps = {
-  points: Points;
-};
+export default function Map(): JSX.Element {
+  const currentState = useAppSelector((state) => state);
+  const city = currentState.currentCity;
+  const offers = currentState.currentOffers;
 
-export default function Map(props: MapProps): JSX.Element {
-  const {points} = props;
+  const prearePoints = () => {
+    const points:Points = [];
 
-  const city = useAppSelector((state) => state.currentCity);
+    offers.forEach((offer) => {
+      points.push(offer.points);
+    });
+
+    return points;
+  };
+
+  const points = prearePoints();
+
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
