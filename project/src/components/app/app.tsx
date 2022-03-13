@@ -7,8 +7,7 @@ import PrivateRoute from '../../components/private-route/private-route';
 
 
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute, AuthStatus} from '../../const';
-
+import {AppRoute, AuthStatus} from '../../const/const';
 
 import {Offers} from '../../types/offers';
 import {Reviews} from  '../../types/types';

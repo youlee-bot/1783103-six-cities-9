@@ -2,33 +2,22 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
-
-import {CITY} from '../../mock/city';
+import MenuList from '../../components/menu-list/menu-list';
 
 import {Offers} from '../../types/offers';
-import {Points} from '../../types/types';
 
-import {CardsDisplayType} from '../../const';
+import {CardsDisplayType} from '../../const/const';
+
+//import {useAppSelector} from '../../hooks/index';
 
 type IndexPageProps = {
   foundResults: number;
   offers: Offers;
 }
 
-const preparePoints = (offers:Offers) => {
-  const points:Points = [];
-
-  offers.forEach((offer) => {
-    points.push(offer.points);
-  });
-
-  return points;
-};
-
-
 export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.Element {
+  //const currentCity = useAppSelector((state) => state.city);
 
-  const points = preparePoints(offers);
 
   return (
     <>
@@ -37,38 +26,7 @@ export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.E
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/#">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <MenuList />
           </section>
         </div>
         <div className="cities">
@@ -107,7 +65,7 @@ export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.E
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map city={CITY} points={points}/></section>
+              <section className="cities__map map"><Map /></section>
             </div>
           </div>
         </div>

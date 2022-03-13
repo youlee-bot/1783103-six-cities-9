@@ -5,6 +5,8 @@ export type City = {
   zoom: number;
 };
 
+export type Cities = City[]
+
 export type Point = {
   lat: number;
   lng: number;
@@ -14,7 +16,7 @@ export type Points = Point[];
 
 export type Review = {
   reviewId: number;
-  name:string;
+  name: string;
   avatar: string;
   reviewContent: string;
   reviewDate: string;
