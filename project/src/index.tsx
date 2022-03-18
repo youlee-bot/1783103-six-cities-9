@@ -8,14 +8,10 @@ import App from './components/app/app';
 import {offers} from './mock/offers';
 import {reviews} from  './mock/reviews';
 
-const settings = {
-  foundResults: 312,
-};
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App offers={offers} reviews={reviews} foundResults={settings.foundResults}/>
+      <App offers={offers} reviews={reviews}/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

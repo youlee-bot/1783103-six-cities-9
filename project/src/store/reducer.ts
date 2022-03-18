@@ -1,15 +1,24 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, changeFoundResults, changeCurrentOffers} from './action';
+import {changeCity, changeOffers, changehoveredPoint} from './action';
+
+import {Cities, City, Point} from '../types/types';
+import {Offers} from '../types/offers';
 
 import {CITIES} from '../const/city';
 import {offers} from '../mock/offers';
 
+interface CurrentState {
+  currentCity: City,
+  cities: Cities,
+  offers: Offers,
+  hoveredPoint: Point|null,
+}
 
 const initialState = {
   currentCity: CITIES[0],
   cities: CITIES,
-  foundResults: 0,
-  currentOffers: offers,
+  offers: offers,
+  hoveredPoint: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -17,11 +26,11 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       state.currentCity = action.payload;
     })
-    .addCase(changeFoundResults, (state, action) => {
-      state.foundResults = action.payload;
+    .addCase(changeOffers, (state, action) => {
+      state.offers = action.payload;
     })
-    .addCase(changeCurrentOffers, (state, action) => {
-      state.currentOffers = action.payload;
+    .addCase(changehoveredPoint, (state, action) => {
+      state.hoveredPoint = action.payload;
     });
 });
 

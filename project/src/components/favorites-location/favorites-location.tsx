@@ -10,10 +10,7 @@ type favoritesLocationProps = {
 //ts-lint ignore
 export default function FavoritesLocationList({offers}: favoritesLocationProps): JSX.Element {
   const cities = new Set();
-
-  offers.map((element) => {
-    cities.add(element.city);
-  });
+  offers.forEach((element) => cities.add(element.city));
 
 
   return (

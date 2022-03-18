@@ -5,18 +5,26 @@ import Map from '../../components/map/map';
 import MenuList from '../../components/menu-list/menu-list';
 
 import {Offers} from '../../types/offers';
+import {Points} from '../../types/types';
 
 import {CardsDisplayType} from '../../const/const';
 
-//import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/index';
 
-type IndexPageProps = {
-  foundResults: number;
-  offers: Offers;
-}
+export default function IndexPage(): JSX.Element {
+  const currentState = useAppSelector((state) => state);
+  const currentCity = currentState.currentCity.title;
+  const offersToDisplay:Offers = [];
+  const offers = currentState.offers;
+  const points:Points = [];
 
-export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.Element {
-  //const currentCity = useAppSelector((state) => state.city);
+  offers.forEach((element) => {
+    if (currentCity === element.city) {
+      offersToDisplay.push(element);
+      points.push(element.points);
+    }
+  });
+  const foundResults = offersToDisplay.length;
 
 
   return (
@@ -33,7 +41,7 @@ export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.E
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{foundResults} places to stay in Amsterdam</b>
+              <b className="places__found">{foundResults} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -61,11 +69,11 @@ export default function IndexPage({foundResults, offers}: IndexPageProps): JSX.E
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CardsList displayType={CardsDisplayType.Index} offers={offers}/>
+                <CardsList displayType={CardsDisplayType.Index} offers={offersToDisplay}/>
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map /></section>
+              <section className="cities__map map"><Map points={points}/></section>
             </div>
           </div>
         </div>

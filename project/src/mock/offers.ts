@@ -50,8 +50,8 @@ export const offers: Offers = [
     price: 180,
     favorites: false,
     points: {
-      lat: 52.3809553943508,
-      lng: 4.939309666406198,
+      lat: 48.865716,
+      lng: 2.349014,
     },
   },
   {
