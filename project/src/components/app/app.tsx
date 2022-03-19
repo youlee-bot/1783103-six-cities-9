@@ -1,3 +1,6 @@
+import {useAppDispatch} from '../../hooks/index';
+import {changeOffers} from '../../store/action';
+
 import IndexPage from '../../pages/index-page/index-page';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
@@ -13,17 +16,18 @@ import {Offers} from '../../types/offers';
 import {Reviews} from  '../../types/types';
 
 type AppProps = {
-  foundResults: number;
   offers: Offers;
   reviews: Reviews;
 }
 
-export default function App({foundResults,offers, reviews}: AppProps): JSX.Element {
+export default function App({offers, reviews}: AppProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(changeOffers(offers));
   return (
     <div className="page">
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Root} element={<IndexPage offers={offers} foundResults={foundResults}/>}/>
+          <Route path={AppRoute.Root} element={<IndexPage />}/>
           <Route path={AppRoute.Login} element={<Login/>}/>
           <Route path={AppRoute.PropertyId} element={<Property offers={offers} reviews={reviews}/>}/>
           <Route path={AppRoute.Favorites} element={
