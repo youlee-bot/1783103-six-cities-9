@@ -4,15 +4,16 @@ import {useAppSelector} from '../../hooks/index';
 import 'leaflet/dist/leaflet.css';
 import leaflet from 'leaflet';
 import useMap from '../../hooks/useMap';
-import {Points} from '../../types/types';
+import {Points, Point} from '../../types/types';
 
-import {URL_MARKER_DEFAULT} from '../../const/const'; //, URL_MARKER_CURRENT
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const/const'; //, URL_MARKER_CURRENT
 
 type MapProps = {
   points: Points;
+  hoveredCardPoints: Point|null;
 }
 
-export default function Map({points}:MapProps): JSX.Element {
+export default function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
   const currentState = useAppSelector((state) => state);
 
   const city = currentState.currentCity;
@@ -26,11 +27,11 @@ export default function Map({points}:MapProps): JSX.Element {
     iconAnchor: [20, 40],
   });
 
-  // const currentCustomIcon = leaflet.icon({
-  //   iconUrl: URL_MARKER_CURRENT,
-  //   iconSize: [40, 40],
-  //   iconAnchor: [20, 40],
-  // });
+  const currentCustomIcon = leaflet.icon({
+    iconUrl: URL_MARKER_CURRENT,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
 
   useEffect(() => {
     if (map) {
@@ -42,7 +43,11 @@ export default function Map({points}:MapProps): JSX.Element {
             lng: point.lng,
           },
           {
-            icon: defaultCustomIcon,
+            icon: (point.lat === hoveredCardPoints?.lat && point.lng === hoveredCardPoints?.lng)
+              ?
+              currentCustomIcon
+              :
+              defaultCustomIcon,
           })
           .addTo(map);
       });

@@ -6,3 +6,4 @@ import {Point} from  '../types/types';
 export const changeCity = createAction<City>('app/changeCity');
 export const changeOffers = createAction<Offers>('app/changeCurrentOffers');
 export const changehoveredPoint = createAction<Point|null>('app/changeHoveredPoint');
+export const changeSortType = createAction<string>('app/changeSortType');

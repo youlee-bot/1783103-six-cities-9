@@ -6,6 +6,7 @@ export type Offer = {
   city: string;
   price: number;
   favorites: boolean;
+  rating: number;
   points: {
     lat: number;
     lng: number;

@@ -9,7 +9,7 @@ import CardsList from '../../components/cards-list/cards-list';
 import {Offers} from '../../types/offers';
 import {Reviews} from '../../types/types';
 
-import {CardsDisplayType} from '../../const/const';
+import {CardsDisplayType, SortType} from '../../const/const';
 
 type cardsListProps = {
   offers: Offers;
@@ -178,7 +178,7 @@ export default function Property({offers, reviews}: cardsListProps): JSX.Element
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <CardsList displayType={CardsDisplayType.Property} offers={offers}/>
+              <CardsList displayType={CardsDisplayType.Property} offers={offers} sortType={SortType.Popular}/>
             </div>
           </section>
         </div>
