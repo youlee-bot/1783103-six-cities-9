@@ -20,9 +20,9 @@ export default function IndexPage(): JSX.Element {
   const points: Points = [];
 
   offers.forEach((element) => {
-    if (currentCity === element.city) {
+    if (currentCity === element.city.name) {
       offersToDisplay.push(element);
-      points.push(element.points);
+      points.push(element.location);
     }
   });
   const foundResults = offersToDisplay.length;

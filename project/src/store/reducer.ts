@@ -1,11 +1,10 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, changeOffers, changehoveredPoint, changeSortType} from './action';
+import {changeCity, fetchOffers, changehoveredPoint, changeSortType} from './action';
 
 import {Cities, City, Point} from '../types/types';
 import {Offers} from '../types/offers';
 
 import {CITIES} from '../const/city';
-import {offers} from '../mock/offers';
 
 import {SortType} from '../const/const';
 
@@ -20,7 +19,7 @@ interface CurrentState {
 const initialState: CurrentState = {
   currentCity: CITIES[0],
   cities: CITIES,
-  offers: offers,
+  offers: [],
   hoveredPoint: null,
   sortType: SortType.Popular,
 };
@@ -30,7 +29,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       state.currentCity = action.payload;
     })
-    .addCase(changeOffers, (state, action) => {
+    .addCase(fetchOffers, (state, action) => {
       state.offers = action.payload;
     })
     .addCase(changehoveredPoint, (state, action) => {

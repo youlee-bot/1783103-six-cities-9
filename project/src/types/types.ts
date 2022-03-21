@@ -8,8 +8,9 @@ export type City = {
 export type Cities = City[]
 
 export type Point = {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
+  zoom: number;
 };
 
 export type Points = Point[];
