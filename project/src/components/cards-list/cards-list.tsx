@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import useSort from '../../hooks/useSort';
+import useSortOffers from '../../hooks/useSortOffers';
 
 import Card from '../../components/card/card';
 import {Offers} from '../../types/offers';
@@ -22,7 +22,7 @@ export default function CardsList({offers, displayType, sortType}: cardsListProp
 
   const dispatch = useAppDispatch();
   dispatch(changehoveredPoint(currentActiveCard ?? null));
-  useSort(offers,sortType);
+  useSortOffers(offers,sortType);
 
   let articleClassName: string;
   switch (displayType) {
@@ -37,7 +37,7 @@ export default function CardsList({offers, displayType, sortType}: cardsListProp
   return (
     <>
       {offers.map((element) => (
-        <article key={element.id} onMouseOver={() => setActiveCard(element.points)} onMouseOut={()=>setActiveCard(null)} className={articleClassName}>
+        <article key={element.id} onMouseOver={() => setActiveCard(element.location)} onMouseOut={()=>setActiveCard(null)} className={articleClassName}>
           <Card displayType={displayType} offer={element}/>
         </article>),
       )}

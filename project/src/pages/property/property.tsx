@@ -18,7 +18,7 @@ type cardsListProps = {
 
 const prepareReviews = (reviews: Reviews, id: number): Reviews => {
   const reviewsList: Reviews = [];
-  reviews.map((review) => {
+  reviews.forEach((review) => {
     if (review.reviewId === id) {
       reviewsList.push(review);
     }

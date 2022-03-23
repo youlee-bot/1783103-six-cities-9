@@ -1,7 +1,7 @@
 import {SortType} from '../const/const';
 import {Offers} from '../types/offers';
 
-export default function useSort(array:Offers,sortType:string):Offers {
+export default function useSortOffers(array:Offers,sortType:string):Offers {
   switch (sortType) {
     case SortType.HighToLow:
       array.sort((a, b)=>{

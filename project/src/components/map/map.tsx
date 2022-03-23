@@ -39,11 +39,11 @@ export default function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
       points.forEach((point) => {
         leaflet
           .marker({
-            lat: point.lat,
-            lng: point.lng,
+            lat: point.latitude,
+            lng: point.longitude,
           },
           {
-            icon: (point.lat === hoveredCardPoints?.lat && point.lng === hoveredCardPoints?.lng)
+            icon: (point.latitude === hoveredCardPoints?.latitude && point.longitude === hoveredCardPoints?.longitude)
               ?
               currentCustomIcon
               :
@@ -52,7 +52,7 @@ export default function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, points]);
+  }, [map, points, city]);
 
   return <div style={{height: '1000px'}} ref={mapRef}></div>;
 }
