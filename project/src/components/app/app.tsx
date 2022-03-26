@@ -9,7 +9,7 @@ import LoadingScreen from '../../components/loading-screen/loading-screen';
 import {useAppSelector} from '../../hooks/index';
 
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute, AuthStatus} from '../../const/const';
+import {AppRoute} from '../../const/const';
 
 import {Reviews} from  '../../types/types';
 
@@ -33,7 +33,7 @@ export default function App({reviews}: AppProps): JSX.Element {
           <Route path={AppRoute.Login} element={<Login/>}/>
           <Route path={AppRoute.PropertyId} element={<Property offers={offers} reviews={reviews}/>}/>
           <Route path={AppRoute.Favorites} element={
-            <PrivateRoute authorizationStatus={AuthStatus.Auth}>
+            <PrivateRoute>
               <Favorites offers={offers}/>
             </PrivateRoute>
           }

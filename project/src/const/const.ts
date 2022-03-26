@@ -33,4 +33,6 @@ export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensi
 
 export enum APIRoute {
   offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
