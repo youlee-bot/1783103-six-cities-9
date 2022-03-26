@@ -6,7 +6,7 @@ import {Offers} from '../types/offers';
 
 import {CITIES} from '../const/city';
 
-import {SortType} from '../const/const';
+import {SortType, AuthStatus} from '../const/const';
 
 interface CurrentState {
   currentCity: City,
@@ -14,6 +14,7 @@ interface CurrentState {
   offers: Offers,
   hoveredPoint: Point | null,
   sortType: string,
+  authorizationStatus: string,
 }
 
 const initialState: CurrentState = {
@@ -22,6 +23,7 @@ const initialState: CurrentState = {
   offers: [],
   hoveredPoint: null,
   sortType: SortType.Popular,
+  authorizationStatus: AuthStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
