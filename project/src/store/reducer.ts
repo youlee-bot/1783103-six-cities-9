@@ -1,8 +1,8 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, fetchOffers, changehoveredPoint, changeSortType} from './action';
+import {changeCity, fetchOffers, changehoveredPoint, changeSortType, fetchOffer, setError, fetchReviews, fetchOfferNearby} from './action';
 
-import {Cities, City, Point} from '../types/types';
-import {Offers} from '../types/offers';
+import {Cities, City, Point, Reviews} from '../types/types';
+import {Offer, Offers} from '../types/offers';
 
 import {CITIES} from '../const/city';
 
@@ -15,6 +15,10 @@ interface CurrentState {
   hoveredPoint: Point | null,
   sortType: string,
   authorizationStatus: string,
+  currentOffer: Offer | null,
+  error: string,
+  reviews: Reviews,
+  offerNearby: Offers
 }
 
 const initialState: CurrentState = {
@@ -24,6 +28,10 @@ const initialState: CurrentState = {
   hoveredPoint: null,
   sortType: SortType.Popular,
   authorizationStatus: AuthStatus.Unknown,
+  currentOffer: null,
+  error: '',
+  reviews: [],
+  offerNearby: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -39,6 +47,18 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSortType, (state, action) => {
       state.sortType = action.payload;
+    })
+    .addCase(fetchOffer, (state, action) => {
+      state.currentOffer = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(fetchReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(fetchOfferNearby, (state, action) => {
+      state.offerNearby = action.payload;
     });
 });
 

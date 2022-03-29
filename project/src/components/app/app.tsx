@@ -5,19 +5,15 @@ import Property from '../../pages/property/property';
 import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../../components/private-route/private-route';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 import {useAppSelector} from '../../hooks/index';
 
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const/const';
 
-import {Reviews} from  '../../types/types';
-
-type AppProps = {
-  reviews: Reviews;
-}
-
-export default function App({reviews}: AppProps): JSX.Element {
+export default function App(): JSX.Element {
   const currentState = useAppSelector((state) => state);
   const offers = currentState.offers;
   if (!currentState.offers) {
@@ -27,11 +23,11 @@ export default function App({reviews}: AppProps): JSX.Element {
   }
   return (
     <div className="page">
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Root} element={<IndexPage />}/>
           <Route path={AppRoute.Login} element={<Login/>}/>
-          <Route path={AppRoute.PropertyId} element={<Property offers={offers} reviews={reviews}/>}/>
+          <Route path={AppRoute.PropertyId} element={<Property offers={offers}/>}/>
           <Route path={AppRoute.Favorites} element={
             <PrivateRoute>
               <Favorites offers={offers}/>
@@ -39,8 +35,9 @@ export default function App({reviews}: AppProps): JSX.Element {
           }
           />
           <Route path="*" element={<NotFound/>}></Route>
+          <Route path={AppRoute.NotFound} element={<NotFound/>}></Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </div>
   );
 }
