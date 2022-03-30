@@ -1,3 +1,5 @@
+import * as stream from "stream";
+
 export type City = {
   title: string;
   lat: number;
@@ -16,12 +18,16 @@ export type Point = {
 export type Points = Point[];
 
 export type Review = {
-  reviewId: number;
-  name: string;
-  avatar: string;
-  reviewContent: string;
-  reviewDate: string;
-  offerId: number;
+    comment: string;
+    date: string;
+    id: number;
+    rating: number;
+    user: {
+      avatarUrl: string;
+      id: number;
+      isPro: boolean;
+      name: string;
+    }
 };
 
 export type Reviews = Review[];
@@ -31,8 +37,19 @@ export type AuthData = {
   password: string;
 };
 
+export type PostCommentData = {
+  comment: string;
+  rating: number;
+  id: number;
+}
+
 export type UserData = {
   id: number;
   email: string;
   token: string;
 };
+
+export type OfferId = number;
+
+export type ErrorType = unknown;
+

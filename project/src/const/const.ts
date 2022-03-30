@@ -5,6 +5,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   Property = '/offer',
   PropertyId = '/offer/:id',
+  NotFound = '/not-found',
 }
 
 export enum AuthStatus {
@@ -35,4 +36,15 @@ export enum APIRoute {
   offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments'
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const REQUEST_TIMEOUT = 5000;
+
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
 }

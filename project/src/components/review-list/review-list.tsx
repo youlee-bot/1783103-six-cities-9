@@ -7,10 +7,10 @@ type reviewListProps = {
 }
 
 export default function ReviewList({reviews}: reviewListProps): JSX.Element {
-  console.log(reviews);
+
   return (
     <ul className="reviews__list">
-      {reviews.map((reviewItem)=><ReviewItem review={reviewItem} key={reviewItem.reviewId}/>)}
+      {reviews.map((reviewItem)=><ReviewItem review={reviewItem} key={reviewItem.id}/>)}
     </ul>
   );
 }
