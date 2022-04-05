@@ -9,12 +9,23 @@ export default function CommentForm(): JSX.Element {
   const [currentComment, setComment] = useState('');
   const currentId = useAppSelector((state)=>state?.currentOffer?.id);
 
+  let commentStatus = false;
+
   const onFormSubmit = (evt:FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (currentId) {
       postCommentAction({comment: currentComment, rating: currentStar, id:currentId});
     }
   };
+
+  const checkCommentLength = (comment:string):string => {
+    if ((comment.length > 50)&&(comment.length < 300)) {
+      commentStatus = true;
+    }
+    commentStatus = false;
+    return comment;
+  };
+
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={onFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
@@ -113,7 +124,7 @@ export default function CommentForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         defaultValue={''}
-        onChange={(evt) => {setComment(evt.target.value);}}
+        onChange={(evt) => {setComment(checkCommentLength(evt.target.value));}}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -125,7 +136,7 @@ export default function CommentForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={commentStatus}
         >
           Submit
         </button>
