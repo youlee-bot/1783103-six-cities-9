@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import useSortOffers from '../../hooks/useSortOffers';
 
 import Card from '../../components/card/card';
@@ -21,7 +21,11 @@ export default function CardsList({offers, displayType, sortType}: cardsListProp
   const [currentActiveCard, setActiveCard] = useState<Point | null>(null);
 
   const dispatch = useAppDispatch();
-  dispatch(changehoveredPoint(currentActiveCard ?? null));
+
+  useEffect(() => {
+    dispatch(changehoveredPoint(currentActiveCard ?? null));
+    console.log(currentActiveCard);
+  }, [currentActiveCard]);
   useSortOffers(offers,sortType);
 
   let articleClassName: string;
@@ -34,10 +38,18 @@ export default function CardsList({offers, displayType, sortType}: cardsListProp
       break;
   }
 
+  const onMouseOver = useCallback((evt) => {
+    const target = evt.target.closest('article').getAttribute('data-id');
+    if (target) {
+      setActiveCard(offers[target].location);
+      console.log(currentActiveCard);
+    }
+  }, [currentActiveCard]);
+
   return (
     <>
-      {offers.map((element) => (
-        <article key={element.id} onMouseOver={() => setActiveCard(element.location)} onMouseOut={()=>setActiveCard(null)} className={articleClassName}>
+      {offers.map((element, elementId) => (
+        <article data-id={elementId} key={element.id} onMouseOver={onMouseOver} onMouseOut={()=>setActiveCard(null)} className={articleClassName}>
           <Card displayType={displayType} offer={element}/>
         </article>),
       )}

@@ -1,4 +1,4 @@
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, memo} from 'react';
 import {useAppSelector} from '../../hooks/index';
 
 import 'leaflet/dist/leaflet.css';
@@ -13,7 +13,7 @@ type MapProps = {
   hoveredCardPoints: Point|null;
 }
 
-export default function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
+function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
   const currentState = useAppSelector((state) => state);
 
   const city = currentState.currentCity;
@@ -56,3 +56,5 @@ export default function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
 
   return <div style={{height: '1000px'}} ref={mapRef}></div>;
 }
+
+export default memo (Map);
