@@ -1,9 +1,8 @@
-import {useCallback, useEffect, useState} from 'react';
+import {memo, useCallback} from 'react';
 import useSortOffers from '../../hooks/useSortOffers';
 
 import Card from '../../components/card/card';
 import {Offers} from '../../types/offers';
-import {Point} from '../../types/types';
 
 import {useAppDispatch} from '../../hooks/index';
 
@@ -17,15 +16,8 @@ type cardsListProps = {
   sortType: string;
 }
 
-export default function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element {
-  const [currentActiveCard, setActiveCard] = useState<Point | null>(null);
-
+function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(changehoveredPoint(currentActiveCard ?? null));
-    console.log(currentActiveCard);
-  }, [currentActiveCard]);
   useSortOffers(offers,sortType);
 
   let articleClassName: string;
@@ -40,18 +32,22 @@ export default function CardsList({offers, displayType, sortType}: cardsListProp
 
   const onMouseOver = useCallback((evt) => {
     const target = evt.target.closest('article').getAttribute('data-id');
-    if (target) {
-      setActiveCard(offers[target].location);
-      console.log(currentActiveCard);
-    }
-  }, [currentActiveCard]);
+    dispatch(changehoveredPoint(offers[target]?.location ?? null));
+  }, []);
+
+  const onMouseOut = useCallback(
+    ()=>dispatch(changehoveredPoint(null)),
+    []);
+
 
   return (
     <>
       {offers.map((element, elementId) => (
-        <article data-id={elementId} key={element.id} onMouseOver={onMouseOver} onMouseOut={()=>setActiveCard(null)} className={articleClassName}>
+        <article data-id={elementId} key={element.id} onMouseOver={onMouseOver} onMouseOut={onMouseOut} className={articleClassName}>
           <Card displayType={displayType} offer={element}/>
         </article>),
       )}
     </>);
 }
+
+export default memo(CardsList);

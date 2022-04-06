@@ -1,3 +1,5 @@
+import './wdyr';
+
 import IndexPage from '../../pages/index-page/index-page';
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
