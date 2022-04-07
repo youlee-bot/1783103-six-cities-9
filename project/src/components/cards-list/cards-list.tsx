@@ -1,5 +1,5 @@
 import {memo, useCallback} from 'react';
-import useSortOffers from '../../hooks/useSortOffers';
+import useSortOffers from '../../utils/useSortOffers';
 
 import Card from '../../components/card/card';
 import {Offers} from '../../types/offers';

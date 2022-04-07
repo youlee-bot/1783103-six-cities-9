@@ -1,25 +1,11 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {changeCity, fetchOffers, changehoveredPoint, changeSortType, fetchOffer, setError, fetchReviews, fetchOfferNearby} from './action';
 
-import {Cities, City, Point, Reviews} from '../types/types';
-import {Offer, Offers} from '../types/offers';
+import {CurrentState} from '../types/types';
 
 import {CITIES} from '../const/city';
 
 import {SortType, AuthStatus} from '../const/const';
-
-interface CurrentState {
-  currentCity: City,
-  cities: Cities,
-  offers: Offers,
-  hoveredPoint: Point | null,
-  sortType: string,
-  authorizationStatus: string,
-  currentOffer: Offer | null,
-  error: string,
-  reviews: Reviews,
-  offerNearby: Offers
-}
 
 const initialState: CurrentState = {
   currentCity: CITIES[0],

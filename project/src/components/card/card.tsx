@@ -3,13 +3,14 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offers';
 
 import {CardsDisplayType, AppRoute} from '../../const/const';
+import { memo } from 'react';
 
 type cardProps = {
   offer: Offer;
   displayType: string;
 }
 
-export default function Card({offer, displayType}: cardProps): JSX.Element {
+function Card({offer, displayType}: cardProps): JSX.Element {
   const linkToOffer = `${AppRoute.Property}/${offer.id}`;
 
   let wrapperClassName = '';
@@ -57,3 +58,5 @@ export default function Card({offer, displayType}: cardProps): JSX.Element {
 
   return content;
 }
+
+export default memo(Card);

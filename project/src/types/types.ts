@@ -1,4 +1,4 @@
-import * as stream from "stream";
+import {Offer, Offers} from '../types/offers';
 
 export type City = {
   title: string;
@@ -53,3 +53,15 @@ export type OfferId = number;
 
 export type ErrorType = unknown;
 
+export interface CurrentState {
+  currentCity: City,
+  cities: Cities,
+  offers: Offers,
+  hoveredPoint: Point | null,
+  sortType: string,
+  authorizationStatus: string,
+  currentOffer: Offer | null,
+  error: string,
+  reviews: Reviews,
+  offerNearby: Offers
+}

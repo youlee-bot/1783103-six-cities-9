@@ -6,20 +6,30 @@ import MenuList from '../../components/menu-list/menu-list';
 import SortMenu from '../../components/sort-menu/sort-menu';
 
 import {Offers} from '../../types/offers';
-import {Points} from '../../types/types';
+import {Points, CurrentState} from '../../types/types';
 
 import {CardsDisplayType} from '../../const/const';
 
 import {useAppSelector} from '../../hooks/index';
+import {useEffect, useState } from 'react';
 
 export default function IndexPage(): JSX.Element {
-  const currentState = useAppSelector((state) => state);
-  const currentCity = currentState.currentCity.title;
+  const [currentState, setCurrentState] = useState<CurrentState>();
+
+  const currentCity = useAppSelector((state) => state.currentCity.title);
+  const getState = useAppSelector((state) => state);
+
+  useEffect(() => {
+    setCurrentState(getState);
+  }, [currentCity]);
+
   const offersToDisplay: Offers = [];
-  const offers = currentState.offers;
+  const offers = currentState?.offers;
+
+
   const points: Points = [];
 
-  offers.forEach((element) => {
+  offers?.forEach((element) => {
     if (currentCity === element.city.name) {
       offersToDisplay.push(element);
       points.push(element.location);
@@ -45,11 +55,11 @@ export default function IndexPage(): JSX.Element {
               <b className="places__found">{foundResults} places to stay in {currentCity}</b>
               <SortMenu/>
               <div className="cities__places-list places__list tabs__content">
-                <CardsList displayType={CardsDisplayType.Index} offers={offersToDisplay} sortType={currentState.sortType}/>
+                <CardsList displayType={CardsDisplayType.Index} offers={offersToDisplay} sortType={currentState?currentState.sortType:''}/>
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map points={points} hoveredCardPoints={currentState.hoveredPoint}/></section>
+              <section className="cities__map map"><Map points={points} /></section>
             </div>
           </div>
         </div>
