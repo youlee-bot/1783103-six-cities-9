@@ -32,7 +32,7 @@ function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element
 
   const onMouseOver = useCallback((evt) => {
     const target = evt.target.closest('article').getAttribute('data-id');
-    dispatch(changehoveredPoint(offers[target]?.location ?? null));
+    dispatch(changehoveredPoint(offers[target]?.location));
   }, []);
 
   const onMouseOut = useCallback(

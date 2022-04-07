@@ -16,6 +16,7 @@ function Map({points}:MapProps): JSX.Element {
   const city = useAppSelector((state) => state.currentCity);
   const hoveredCardPoints = useAppSelector((state) => state.hoveredPoint);
 
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
