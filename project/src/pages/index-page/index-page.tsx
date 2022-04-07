@@ -6,26 +6,18 @@ import MenuList from '../../components/menu-list/menu-list';
 import SortMenu from '../../components/sort-menu/sort-menu';
 
 import {Offers} from '../../types/offers';
-import {Points, CurrentState} from '../../types/types';
+import {Points} from '../../types/types';
 
 import {CardsDisplayType} from '../../const/const';
 
 import {useAppSelector} from '../../hooks/index';
-import {useEffect, useState } from 'react';
 
 export default function IndexPage(): JSX.Element {
-  const [currentState, setCurrentState] = useState<CurrentState>();
-
   const currentCity = useAppSelector((state) => state.currentCity.title);
-  const getState = useAppSelector((state) => state);
-
-  useEffect(() => {
-    setCurrentState(getState);
-  }, [currentCity]);
+  const currentSortType = useAppSelector((state) => state.sortType);
+  const offers = useAppSelector((state) => state.offers);
 
   const offersToDisplay: Offers = [];
-  const offers = currentState?.offers;
-
 
   const points: Points = [];
 
@@ -55,7 +47,7 @@ export default function IndexPage(): JSX.Element {
               <b className="places__found">{foundResults} places to stay in {currentCity}</b>
               <SortMenu/>
               <div className="cities__places-list places__list tabs__content">
-                <CardsList displayType={CardsDisplayType.Index} offers={offersToDisplay} sortType={currentState?currentState.sortType:''}/>
+                <CardsList displayType={CardsDisplayType.Index} offers={offersToDisplay} sortType={currentSortType}/>
               </div>
             </section>
             <div className="cities__right-section">
