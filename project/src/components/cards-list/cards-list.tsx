@@ -30,14 +30,14 @@ function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element
       break;
   }
 
-  const onMouseOver = useCallback((evt) => {
+  const onMouseOver = (evt) => {
     const target = evt.target.closest('article').getAttribute('data-id');
-    dispatch(changehoveredPoint(offers[target]?.location));
-  }, []);
+    dispatch(changehoveredPoint(offers[target].location));
+  };
 
-  const onMouseOut = useCallback(
+  const onMouseOut =
     ()=>dispatch(changehoveredPoint(null)),
-    []);
+    [];
 
 
   return (
