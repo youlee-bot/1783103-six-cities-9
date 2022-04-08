@@ -1,4 +1,3 @@
-import {memo} from 'react';
 import sortOffers from '../../utils/useSortOffers';
 
 import Card from '../../components/card/card';
@@ -11,8 +10,8 @@ type cardsListProps = {
 }
 
 function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element {
-  const sortedOffers = sortOffers(offers,sortType);
-
+  let sortedOffers:Offers = [];
+  sortedOffers = sortOffers(offers,sortType);
   return (
     <>
       {sortedOffers.map((element) => (<Card displayType={displayType} key={element.id} offer={element}/>),
@@ -20,4 +19,4 @@ function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element
     </>);
 }
 
-export default memo(CardsList);
+export default CardsList;

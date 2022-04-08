@@ -2,8 +2,9 @@ import { useLocation } from 'react-router-dom';
 import {AppRoute} from '../../const/const';
 import Logo from '../logo/logo';
 import HeaderLogin from '../../components/header-login/header-login';
+import {memo} from 'react';
 
-export default function Header() {
+function Header() {
   const currentLocation = useLocation();
 
   return (
@@ -19,3 +20,5 @@ export default function Header() {
     </header>
   );
 }
+
+export default memo(Header);
