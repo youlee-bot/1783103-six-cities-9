@@ -5,8 +5,8 @@ import {AuthStatus} from '../../const/const';
 import {AppRoute} from '../../const/const';
 
 export default function HeaderLogin(): JSX.Element {
-  const currentState = useAppSelector((state) => state);
-  if (currentState.authorizationStatus === AuthStatus.Auth) {
+  const currentAuthorisationStatus = useAppSelector((state) => state.authorizationStatus);
+  if (currentAuthorisationStatus === AuthStatus.Auth) {
     return (
       <nav className="header__nav">
         <ul className="header__nav-list">
