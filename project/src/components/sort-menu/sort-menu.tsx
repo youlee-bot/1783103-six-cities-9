@@ -1,13 +1,13 @@
 import {useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 
-import {changeSortType} from '../../store/action';
+import {changeSortType} from '../../store/app-data/app-data';
 
 import {SortType} from '../../const/const';
 
 export default function SortMenu(): JSX.Element {
   const formRef = useRef<HTMLFormElement | null>(null);
-  const currentSortType = useAppSelector((state)=>state.sortType);
+  const currentSortType = useAppSelector(({DATA}) => DATA.sortType);
   const dispatch = useAppDispatch();
 
   const onSortMenuClick = () => {
@@ -27,22 +27,26 @@ export default function SortMenu(): JSX.Element {
           className="places__option places__option--active"
           tabIndex={0}
           onClick={() => {
-            dispatch(changeSortType(SortType.Popular));}}
+            dispatch(changeSortType(SortType.Popular));
+          }}
         >
           Popular
         </li>
         <li className="places__option" tabIndex={0} onClick={() => {
-          dispatch(changeSortType(SortType.LowToHigh));}}
+          dispatch(changeSortType(SortType.LowToHigh));
+        }}
         >
           Price: low to high
         </li>
         <li className="places__option" tabIndex={0} onClick={() => {
-          dispatch(changeSortType(SortType.HighToLow));}}
+          dispatch(changeSortType(SortType.HighToLow));
+        }}
         >
           Price: high to low
         </li>
         <li className="places__option" tabIndex={0} onClick={() => {
-          dispatch(changeSortType(SortType.TopRated));}}
+          dispatch(changeSortType(SortType.TopRated));
+        }}
         >
           Top rated first
         </li>

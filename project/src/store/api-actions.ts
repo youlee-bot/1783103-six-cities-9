@@ -4,16 +4,17 @@ import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthStatus, TIMEOUT_SHOW_ERROR} from '../const/const';
 import {
   fetchOffers,
-  changeAuthorizationStatus,
   fetchOffer,
   setError,
-  redirectToRoute,
   fetchReviews,
-  fetchOfferNearby
-} from '../store/action';
+  fetchOfferNearby,
+  setOfferLoaded,  fetchFavoriteOffers
+} from '../store/app-data/app-data';
+import {requireAuthorization} from '../store/user-process/user-process';
+import {redirectToRoute} from '../store/action';
 import {errorHandle} from '../services/error-handle';
 import {Offers, Offer} from '../types/offers';
-import {AuthData, UserData, OfferId, Reviews, PostCommentData} from '../types/types';
+import {AuthData, UserData, OfferId, Reviews, PostCommentData, PostFavoritesData} from '../types/types';
 import {AppRoute} from '../const/const';
 
 export const fetchOffersAction = createAsyncThunk(
@@ -21,6 +22,14 @@ export const fetchOffersAction = createAsyncThunk(
   async () => {
     const {data} = await api.get<Offers>(APIRoute.offers);
     store.dispatch(fetchOffers(data));
+  },
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk(
+  'data/fetchFavoriteOffers',
+  async () => {
+    const {data} = await api.get<Offers>(APIRoute.Favorite);
+    store.dispatch(fetchFavoriteOffers(data));
   },
 );
 
@@ -40,6 +49,7 @@ export const fetchOfferInfoAction = createAsyncThunk(
     try {
       const {data} = await api.get<Offer>(`${APIRoute.offers}/${id}`);
       store.dispatch(fetchOffer(data));
+      store.dispatch(setOfferLoaded(true));
     } catch (error) {
       errorHandle(error);
       store.dispatch(redirectToRoute(AppRoute.Result));
@@ -78,7 +88,7 @@ export const loginAction = createAsyncThunk(
     try {
       const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
       saveToken(token);
-      store.dispatch(changeAuthorizationStatus(AuthStatus.Auth));
+      store.dispatch(requireAuthorization(AuthStatus.Auth));
     } catch (error) {
       errorHandle(error);
     }
@@ -91,9 +101,22 @@ export const logoutAction = createAsyncThunk(
     try {
       await api.delete(APIRoute.Logout);
       dropToken();
-      store.dispatch(changeAuthorizationStatus(AuthStatus.NoAuth));
+      store.dispatch(requireAuthorization(AuthStatus.NoAuth));
     } catch (error) {
       errorHandle(error);
+    }
+  },
+);
+
+export const checkAuthAction = createAsyncThunk(
+  'user/checkAuth',
+  async () => {
+    try {
+      await api.get(APIRoute.Login);
+      store.dispatch(requireAuthorization(AuthStatus.Auth));
+    } catch(error) {
+      errorHandle(error);
+      store.dispatch(requireAuthorization(AuthStatus.NoAuth));
     }
   },
 );
@@ -103,6 +126,16 @@ export const postCommentAction = createAsyncThunk(
   async ({comment: comment, rating: rating, id: id}: PostCommentData) => {
     try {
       await api.post<UserData>(`${APIRoute.Comments}/${id}`, {comment: comment, rating: rating});
+    } catch (error) {
+      errorHandle(error);
+    }
+  });
+
+export const addToFavoritesAction = createAsyncThunk(
+  'data/addToFavorites',
+  async ({status: status, id}: PostFavoritesData) => {
+    try {
+      await api.post<UserData>(`${APIRoute.Favorite}/${id}/${status}`);
     } catch (error) {
       errorHandle(error);
     }

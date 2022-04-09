@@ -1,18 +1,17 @@
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
-import {changeCity, changeSortType} from '../../store/action';
+import {changeCity, changeSortType} from '../../store/app-data/app-data';
 import {CITIES} from '../../const/city';
 import {SortType} from '../../const/const';
 
 export default function MenuList(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const cititesList = useAppSelector((state) => state.cities);
+  const currentCity = useAppSelector(({DATA}) => DATA.currentCity);
   const dispatch = useAppDispatch();
 
   const getCityInfo = (cityToSearch:string)  => CITIES.filter((city)=>city.title === cityToSearch)[0];
 
   return (
     <ul className="locations__list tabs__list">
-      {cititesList.map((city) => (
+      {CITIES.map((city) => (
         <li className="locations__item" key={city.title}>
           <a className={currentCity.title === city.title ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'} href="#" onClick={()=>
           {

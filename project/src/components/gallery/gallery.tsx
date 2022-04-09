@@ -3,7 +3,6 @@ type GalleryProps = {
   images: imageUrl[];
 }
 export default function Gallery({images}: GalleryProps) {
-  console.log(images);
   return (
     <div className="property__gallery">
       {images.map((image) => (

@@ -3,11 +3,9 @@ import {postCommentAction} from '../../store/api-actions';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 
 export default function CommentForm(): JSX.Element {
-  // eslint-disable-next-line
   const [currentStar, setStar] = useState(0);
-  // eslint-disable-next-line
   const [currentComment, setComment] = useState('');
-  const currentId = useAppSelector((state)=>state?.currentOffer?.id);
+  const currentId = useAppSelector(({DATA})=>DATA?.currentOffer?.id);
 
   const [commentIsValid, setCommentStatus] = useState(false);
 
