@@ -10,8 +10,7 @@ type cardsListProps = {
 }
 
 function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element {
-  let sortedOffers:Offers = [];
-  sortedOffers = sortOffers(offers,sortType);
+  let sortedOffers = sortOffers(offers,sortType);
   return (
     <>
       {sortedOffers.map((element) => (<Card displayType={displayType} key={element.id} offer={element}/>),
