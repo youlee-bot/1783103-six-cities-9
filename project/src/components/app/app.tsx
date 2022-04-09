@@ -14,9 +14,8 @@ import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const/const';
 
 export default function App(): JSX.Element {
-  const currentState = useAppSelector((state) => state);
-  const offers = currentState.offers;
-  if (!currentState.offers) {
+  const offers = useAppSelector((state) => state.offers);
+  if (!offers) {
     return (
       <LoadingScreen />
     );

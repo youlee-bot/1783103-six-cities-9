@@ -2,12 +2,19 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from '../store';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthStatus, TIMEOUT_SHOW_ERROR} from '../const/const';
-import {fetchOffers, changeAuthorizationStatus, fetchOffer, setError, redirectToRoute, fetchReviews, fetchOfferNearby} from '../store/action';
+import {
+  fetchOffers,
+  changeAuthorizationStatus,
+  fetchOffer,
+  setError,
+  redirectToRoute,
+  fetchReviews,
+  fetchOfferNearby
+} from '../store/action';
 import {errorHandle} from '../services/error-handle';
 import {Offers, Offer} from '../types/offers';
 import {AuthData, UserData, OfferId, Reviews, PostCommentData} from '../types/types';
 import {AppRoute} from '../const/const';
-import {getToken} from '../services/token';
 
 export const fetchOffersAction = createAsyncThunk(
   'data/fetchOffers',
@@ -91,20 +98,12 @@ export const logoutAction = createAsyncThunk(
   },
 );
 
-export const postCommentAction = createAsyncThunk('data/postComment', async ({comment:comment, rating:rating, id:id}: PostCommentData) => {
-  try {
-    const data = {
-      params: {
-        comment: comment,
-        rating: rating,
-      },
-      headers: {
-        'X-Auth-Token': getToken(),
-      },
-    };
-    await api.post<UserData>(`${APIRoute.Comments}/${id}`, data);
-  } catch (error) {
-    console.log(error);
-    errorHandle(error);
-  }
-});
+export const postCommentAction = createAsyncThunk(
+  'data/postComment',
+  async ({comment: comment, rating: rating, id: id}: PostCommentData) => {
+    try {
+      await api.post<UserData>(`${APIRoute.Comments}/${id}`, {comment: comment, rating: rating});
+    } catch (error) {
+      errorHandle(error);
+    }
+  });

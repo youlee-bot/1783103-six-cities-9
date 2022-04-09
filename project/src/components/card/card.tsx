@@ -3,26 +3,33 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offers';
 
 import {CardsDisplayType, AppRoute} from '../../const/const';
+import {memo} from 'react';
+import {useAppDispatch} from '../../hooks';
+import {changehoveredPoint} from '../../store/action';
 
 type cardProps = {
   offer: Offer;
   displayType: string;
 }
 
-export default function Card({offer, displayType}: cardProps): JSX.Element {
+function Card({offer, displayType}: cardProps): JSX.Element {
   const linkToOffer = `${AppRoute.Property}/${offer.id}`;
-
   let wrapperClassName = '';
+  const dispatch = useAppDispatch();
 
+  let articleClassName: string|undefined;
   switch (displayType) {
     case (CardsDisplayType.Index):
       wrapperClassName = 'cities__image-wrapper place-card__image-wrapper';
+      articleClassName = 'cities__place-card place-card';
       break;
     case (CardsDisplayType.Property):
       wrapperClassName = 'near-places__image-wrapper place-card__image-wrapper';
+      articleClassName = 'near-places__card place-card';
   }
-  const content = (
-    <>
+
+  return (
+    <article className={articleClassName} onMouseOver={(evt) => dispatch(changehoveredPoint(offer.location))} onMouseOut={() => dispatch(changehoveredPoint(null))}>
       <div className={wrapperClassName}>
         <Link to={linkToOffer}>
           <img className="place-card__image" src="../../../img/apartment-01.jpg" width={260} height={200} alt="apartment"/>
@@ -52,8 +59,8 @@ export default function Card({offer, displayType}: cardProps): JSX.Element {
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
-    </>
+    </article>
   );
-
-  return content;
 }
+
+export default memo(Card);

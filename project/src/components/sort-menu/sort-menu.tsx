@@ -7,7 +7,7 @@ import {SortType} from '../../const/const';
 
 export default function SortMenu(): JSX.Element {
   const formRef = useRef<HTMLFormElement | null>(null);
-  const currentState = useAppSelector((state)=>state);
+  const currentSortType = useAppSelector((state)=>state.sortType);
   const dispatch = useAppDispatch();
 
   const onSortMenuClick = () => {
@@ -17,7 +17,7 @@ export default function SortMenu(): JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get" ref={formRef} onClick={onSortMenuClick}>
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0}>{currentState.sortType}
+      <span className="places__sorting-type" tabIndex={0}>{currentSortType}
         <svg className="places__sorting-arrow" width={7} height={4}>
           <use xlinkHref="#icon-arrow-select"/>
         </svg>

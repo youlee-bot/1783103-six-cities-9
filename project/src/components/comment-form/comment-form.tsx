@@ -1,6 +1,6 @@
-import {FormEvent, useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
 import {postCommentAction} from '../../store/api-actions';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector, useAppDispatch} from '../../hooks/index';
 
 export default function CommentForm(): JSX.Element {
   // eslint-disable-next-line
@@ -9,12 +9,21 @@ export default function CommentForm(): JSX.Element {
   const [currentComment, setComment] = useState('');
   const currentId = useAppSelector((state)=>state?.currentOffer?.id);
 
+  const [commentIsValid, setCommentStatus] = useState(false);
+
+  const dispatch = useAppDispatch();
   const onFormSubmit = (evt:FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (currentId) {
-      postCommentAction({comment: currentComment, rating: currentStar, id:currentId});
+      dispatch(postCommentAction({comment: currentComment, rating: currentStar, id:currentId}));
     }
   };
+
+  useEffect(() => {
+    ((currentComment.length > 50) && (currentComment.length < 300))?setCommentStatus(true):setCommentStatus(false);
+  }, [currentComment]);
+
+
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={onFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
@@ -113,7 +122,7 @@ export default function CommentForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         defaultValue={''}
-        onChange={(evt) => {setComment(evt.target.value);}}
+        onChange={(evt) => setComment(evt.target.value)}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -125,7 +134,7 @@ export default function CommentForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!commentIsValid}
         >
           Submit
         </button>
@@ -133,4 +142,3 @@ export default function CommentForm(): JSX.Element {
     </form>
   );
 }
-
