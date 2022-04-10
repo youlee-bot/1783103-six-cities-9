@@ -44,9 +44,9 @@ export default function Property({offers}: cardsListProps): JSX.Element {
 
   useEffect(() => {
     if (!isOfferLoaded) {
-      store.dispatch(fetchOfferInfoAction(Number(id)));
       store.dispatch(fetchOfferReviewsAction(Number(id)));
       store.dispatch(fetchOfferNearbyAction(Number(id)));
+      store.dispatch(fetchOfferInfoAction(Number(id)));
     }
   }, [dispatch, id, isOfferLoaded]);
 
