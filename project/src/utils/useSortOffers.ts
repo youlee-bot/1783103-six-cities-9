@@ -27,7 +27,7 @@ export default function sortOffers(array:Offers,sortType:string):Offers {
       break;
     case SortType.TopRated:
       array.sort((a, b)=>{
-        if (a.price>b.price){
+        if (a.rating>b.rating){
           return -1;
         }
         if (a.price<b.price){

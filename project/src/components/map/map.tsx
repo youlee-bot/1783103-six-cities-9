@@ -10,9 +10,10 @@ import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const/const';
 
 type MapProps = {
   points: Points;
+  styleString:React.CSSProperties;
 }
 
-function Map({points}:MapProps): JSX.Element {
+function Map({points, styleString}:MapProps): JSX.Element {
   const city = useAppSelector(({DATA}) => DATA.currentCity);
   const hoveredCardPoints = useAppSelector(({DATA}) => DATA.hoveredPoint);
 
@@ -51,9 +52,9 @@ function Map({points}:MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, points, city, hoveredCardPoints]);
+  }, [map, points, city, hoveredCardPoints, currentCustomIcon, defaultCustomIcon]);
 
-  return <div style={{height: '1000px'}} ref={mapRef}></div>;
+  return <div style={styleString} ref={mapRef}></div>;
 }
 
 export default memo (Map);

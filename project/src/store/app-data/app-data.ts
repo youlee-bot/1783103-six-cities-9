@@ -28,11 +28,12 @@ export const appDataProcess = createSlice({
     },
     fetchOffers: (state, action) => {
       state.offers = action.payload;
-      state.isDataLoaded = true;
     },
     fetchFavoriteOffers: (state, action) => {
       state.favoriteOffers = action.payload;
-      state.isfavoriteOffersLoaded = true;
+    },
+    setIsfavoriteOffersLoaded: (state, action) => {
+      state.isfavoriteOffersLoaded = action.payload;
     },
     changehoveredPoint: (state, action) => {
       state.hoveredPoint = action.payload;
@@ -73,4 +74,5 @@ export const {
   setDataLoaded,
   setOfferLoaded,
   fetchFavoriteOffers,
+  setIsfavoriteOffersLoaded,
 } = appDataProcess.actions;

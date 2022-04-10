@@ -19,10 +19,8 @@ export default function App() {
   const offers = useAppSelector(({DATA}) => DATA.offers);
 
   useEffect(() => {
-    if (!isDataLoaded) {
-      store.dispatch(fetchOffersAction());
-    }
-  }, [isDataLoaded]);
+    store.dispatch(fetchOffersAction());
+  }, []);
 
   if (!isDataLoaded) {
     return (

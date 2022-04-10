@@ -5,17 +5,16 @@ import MainContent from '../../components/main-content/main-content';
 import MainEmpty from '../../components/main-empty/main-empty';
 import {Offers} from '../../types/offers';
 import { useEffect } from 'react';
-import {useAppDispatch} from '../../hooks/';
 import { setOfferLoaded } from '../../store/app-data/app-data';
+import { store } from '../../store';
 
 type IndexPageProps = {
   offers: Offers;
 }
 
 export default function IndexPage({offers} :IndexPageProps): JSX.Element {
-  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(setOfferLoaded(false));
+    store.dispatch(setOfferLoaded(false));
   }, []);
 
   return (

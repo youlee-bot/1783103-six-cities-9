@@ -41,7 +41,7 @@ export default function MainContent({offers}:MainContentProps):JSX.Element {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"><Map points={points}/></section>
+          <section className="cities__map map"><Map styleString={{height: '1000px'}} points={points}/></section>
         </div>
       </div>
     </div>
