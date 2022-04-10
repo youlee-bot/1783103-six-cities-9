@@ -16,12 +16,13 @@ export default function CommentForm(): JSX.Element {
     if (currentId) {
       dispatch(postCommentAction({comment: currentComment, rating: currentStar, id:currentId}));
       dispatch(setOfferLoaded(false));
+      setCommentStatus(false);
     }
   };
 
   useEffect(() => {
-    ((currentComment.length > 50) && (currentComment.length < 300))?setCommentStatus(true):setCommentStatus(false);
-  }, [currentComment]);
+    ((currentComment.length > 50) && (currentComment.length < 300) && (currentStar>0))?setCommentStatus(true):setCommentStatus(false);
+  }, [currentComment, currentStar]);
 
 
   return (

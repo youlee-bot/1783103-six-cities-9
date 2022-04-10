@@ -18,7 +18,7 @@ import {useAppSelector, useAppDispatch} from '../../hooks';
 import {store} from '../../store';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { redirectToRoute } from '../../store/action';
-import {changeCity, changehoveredPoint, setDataLoaded } from '../../store/app-data/app-data';
+import { setDataLoaded } from '../../store/app-data/app-data';
 import { Points } from '../../types/types';
 import { CITIES } from '../../const/city';
 
@@ -29,25 +29,24 @@ type cardsListProps = {
 export default function Property({offers}: cardsListProps): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
-  const {reviews, offerNearby, currentOffer, isOfferLoaded, currentCity} = useAppSelector(({DATA}) => DATA);
+  const {reviews, offerNearby, currentOffer, isOfferLoaded} = useAppSelector(({DATA}) => DATA);
   const authStatus = useAppSelector(({USER}) => USER.authorizationStatus);
 
   const points: Points = [];
 
   offerNearby?.forEach((element) => {
     points.push(element.location);
+    if (currentOffer) {
+      points.push(currentOffer.location);
+    }
   });
   const getCityInfo = (cityToSearch:string|undefined)  => CITIES.filter((city)=>city.title === cityToSearch)[0];
-  console.log(currentCity);
-  console.log(offerNearby);
 
   useEffect(() => {
     if (!isOfferLoaded) {
       store.dispatch(fetchOfferInfoAction(Number(id)));
       store.dispatch(fetchOfferReviewsAction(Number(id)));
       store.dispatch(fetchOfferNearbyAction(Number(id)));
-      // store.dispatch(changeCity(getCityInfo(offerNearby[0]?.city.name)));
-      // store.dispatch(changehoveredPoint(currentOffer?.location));
     }
   }, [dispatch, id, isOfferLoaded]);
 
@@ -93,7 +92,7 @@ export default function Property({offers}: cardsListProps): JSX.Element {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: `${currentOffer.rating*10}%`}}/>
+                    <span style={{width: `${Math.round(currentOffer.rating)*20}%`}}/>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{currentOffer.rating}</span>
@@ -150,7 +149,7 @@ export default function Property({offers}: cardsListProps): JSX.Element {
               </div>
             </div>
             <section className="property__map map">
-              <Map points={points} styleString={{width: '100%', height: '579px'}}/>
+              <Map points={points} styleString={{width: '100%', height: '579px'}} city={offerNearby[0].city.name?getCityInfo(offerNearby[0].city.name):getCityInfo(currentOffer.city.name)} hoveredCardPoints={currentOffer.location}/>
             </section>
           </section>
           <div className="container">

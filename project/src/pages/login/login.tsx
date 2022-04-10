@@ -1,9 +1,17 @@
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import LoginForm from '../../components/login-form/login-form';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import {AppRoute, AuthStatus } from '../../const/const';
 
 export default function Login():JSX.Element {
+  const authStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+  if (authStatus === AuthStatus.Auth) {
+    return (
+      <Navigate to={AppRoute.Root}/>
+    );
+  }
   return (
     <>
       <Header/>
