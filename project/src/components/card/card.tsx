@@ -2,10 +2,13 @@ import {Link} from 'react-router-dom';
 
 import {Offer} from '../../types/offers';
 
-import {CardsDisplayType, AppRoute} from '../../const/const';
+import {CardsDisplayType, AppRoute, AuthStatus} from '../../const/const';
 import {memo} from 'react';
-import {useAppDispatch} from '../../hooks';
-import {changehoveredPoint} from '../../store/action';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {changehoveredPoint} from '../../store/app-data/app-data';
+import { addToFavoritesAction } from '../../store/api-actions';
+import { redirectToRoute } from '../../store/action';
+import { store } from '../../store';
 
 type cardProps = {
   offer: Offer;
@@ -16,7 +19,7 @@ function Card({offer, displayType}: cardProps): JSX.Element {
   const linkToOffer = `${AppRoute.Property}/${offer.id}`;
   let wrapperClassName = '';
   const dispatch = useAppDispatch();
-
+  const authStatus = useAppSelector(({USER})=>USER.authorizationStatus);
   let articleClassName: string|undefined;
   switch (displayType) {
     case (CardsDisplayType.Index):
@@ -41,7 +44,14 @@ function Card({offer, displayType}: cardProps): JSX.Element {
             <b className="place-card__price-value">€{offer.price}</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className="place-card__bookmark-button button" type="button" onClick={()=>{
+            if (authStatus === AuthStatus.Auth) {
+              dispatch(addToFavoritesAction({status: Number(!offer.isFavorite), id:offer.id}));
+            } else {
+              store.dispatch(redirectToRoute(AppRoute.Login));
+            }
+          }}
+          >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark"/>
             </svg>
@@ -55,7 +65,7 @@ function Card({offer, displayType}: cardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/#">{offer.title}</a>
+          <Link to="/#">{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

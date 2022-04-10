@@ -9,10 +9,13 @@ import {CardsDisplayType} from '../../const/const';
 
 import {useAppSelector} from '../../hooks/index';
 
-export default function MainContent():JSX.Element {
-  const currentCity = useAppSelector((state) => state.currentCity.title);
-  const currentSortType = useAppSelector((state) => state.sortType);
-  const offers = useAppSelector((state) => state.offers);
+type MainContentProps = {
+  offers: Offers;
+}
+
+export default function MainContent({offers}:MainContentProps):JSX.Element {
+  const currentCity = useAppSelector(({DATA}) => DATA.currentCity.title);
+  const currentSortType = useAppSelector(({DATA}) => DATA.sortType);
 
   const offersToDisplay: Offers = [];
 

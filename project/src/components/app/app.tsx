@@ -7,29 +7,39 @@ import PrivateRoute from '../../components/private-route/private-route';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-
+import {store} from '../../store';
 import {useAppSelector} from '../../hooks/index';
-
 import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const/const';
+import { fetchOffersAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
-export default function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  if (!offers) {
+export default function App() {
+  const isDataLoaded = useAppSelector(({DATA}) => DATA.isDataLoaded);
+  const offers = useAppSelector(({DATA}) => DATA.offers);
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      store.dispatch(fetchOffersAction());
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
     return (
       <LoadingScreen />
     );
   }
+
   return (
     <div className="page">
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route path={AppRoute.Root} element={<IndexPage />}/>
+          <Route path={AppRoute.Root} element={<IndexPage offers={offers}/>}/>
           <Route path={AppRoute.Login} element={<Login/>}/>
           <Route path={AppRoute.PropertyId} element={<Property offers={offers}/>}/>
           <Route path={AppRoute.Favorites} element={
             <PrivateRoute>
-              <Favorites offers={offers}/>
+              <Favorites />
             </PrivateRoute>
           }
           />

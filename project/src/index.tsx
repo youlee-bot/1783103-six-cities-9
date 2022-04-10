@@ -2,13 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {store} from './store';
-import {fetchOffersAction} from '../src/store/api-actions';
 import ErrorMessage from './components/error-message/errorMessage';
 
 import App from './components/app/app';
-
-
-store.dispatch(fetchOffersAction());
 
 
 ReactDOM.render(

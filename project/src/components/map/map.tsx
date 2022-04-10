@@ -13,8 +13,8 @@ type MapProps = {
 }
 
 function Map({points}:MapProps): JSX.Element {
-  const city = useAppSelector((state) => state.currentCity);
-  const hoveredCardPoints = useAppSelector((state) => state.hoveredPoint);
+  const city = useAppSelector(({DATA}) => DATA.currentCity);
+  const hoveredCardPoints = useAppSelector(({DATA}) => DATA.hoveredPoint);
 
 
   const mapRef = useRef(null);

@@ -1,4 +1,5 @@
 import {Offer, Offers} from '../types/offers';
+import {AuthStatus} from '../const/const';
 
 export type City = {
   title: string;
@@ -43,6 +44,11 @@ export type PostCommentData = {
   id: number;
 }
 
+export type PostFavoritesData = {
+  status: number;
+  id: number;
+}
+
 export type UserData = {
   id: number;
   email: string;
@@ -53,15 +59,23 @@ export type OfferId = number;
 
 export type ErrorType = unknown;
 
-export interface CurrentState {
+export interface AppData {
   currentCity: City,
-  cities: Cities,
   offers: Offers,
   hoveredPoint: Point | null,
   sortType: string,
-  authorizationStatus: string,
   currentOffer: Offer | null,
   error: string,
   reviews: Reviews,
-  offerNearby: Offers
+  favoriteOffers: Offers,
+  offerNearby: Offers,
+  isDataLoaded: boolean,
+  isOfferLoaded: boolean,
+  isfavoriteOffersLoaded: boolean,
 }
+
+export type UserProcess = {
+  authorizationStatus: AuthStatus
+};
+
+

@@ -5,7 +5,6 @@ type reviewItemProps = {
 }
 
 export default function ReviewItem({review}: reviewItemProps): JSX.Element {
-  console.log(review);
   return (
     <li className="reviews__item">
       <div className="reviews__user user">

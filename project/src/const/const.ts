@@ -36,7 +36,8 @@ export enum APIRoute {
   offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
-  Comments = '/comments'
+  Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
@@ -47,4 +48,9 @@ export enum HTTP_CODE {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
+}
+
+export enum NameSpace {
+  data = 'DATA',
+  user = 'USER',
 }
