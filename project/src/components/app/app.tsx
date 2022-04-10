@@ -5,42 +5,46 @@ import Property from '../../pages/property/property';
 import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../../components/private-route/private-route';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
-
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
+import {store} from '../../store';
 import {useAppSelector} from '../../hooks/index';
+import {Route, Routes} from 'react-router-dom';
+import {AppRoute} from '../../const/const';
+import { fetchOffersAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute, AuthStatus} from '../../const/const';
+export default function App() {
+  const isDataLoaded = useAppSelector(({DATA}) => DATA.isDataLoaded);
+  const offers = useAppSelector(({DATA}) => DATA.offers);
 
-import {Reviews} from  '../../types/types';
+  useEffect(() => {
+    store.dispatch(fetchOffersAction());
+  }, []);
 
-type AppProps = {
-  reviews: Reviews;
-}
-
-export default function App({reviews}: AppProps): JSX.Element {
-  const currentState = useAppSelector((state) => state);
-  const offers = currentState.offers;
-  if (!currentState.offers) {
+  if (!isDataLoaded) {
     return (
       <LoadingScreen />
     );
   }
+
   return (
     <div className="page">
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route path={AppRoute.Root} element={<IndexPage />}/>
+          <Route path={AppRoute.Root} element={<IndexPage offers={offers}/>}/>
           <Route path={AppRoute.Login} element={<Login/>}/>
-          <Route path={AppRoute.PropertyId} element={<Property offers={offers} reviews={reviews}/>}/>
+          <Route path={AppRoute.PropertyId} element={<Property offers={offers}/>}/>
           <Route path={AppRoute.Favorites} element={
-            <PrivateRoute authorizationStatus={AuthStatus.Auth}>
-              <Favorites offers={offers}/>
+            <PrivateRoute>
+              <Favorites />
             </PrivateRoute>
           }
           />
           <Route path="*" element={<NotFound/>}></Route>
+          <Route path={AppRoute.NotFound} element={<NotFound/>}></Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import {SortType} from '../const/const';
 import {Offers} from '../types/offers';
 
-export default function useSortOffers(array:Offers,sortType:string):Offers {
+export default function sortOffers(array:Offers,sortType:string):Offers {
   switch (sortType) {
     case SortType.HighToLow:
       array.sort((a, b)=>{
@@ -27,7 +27,7 @@ export default function useSortOffers(array:Offers,sortType:string):Offers {
       break;
     case SortType.TopRated:
       array.sort((a, b)=>{
-        if (a.price>b.price){
+        if (a.rating>b.rating){
           return -1;
         }
         if (a.price<b.price){

@@ -1,13 +1,32 @@
-import {useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
+import {postCommentAction} from '../../store/api-actions';
+import {useAppSelector, useAppDispatch} from '../../hooks/index';
+import { setOfferLoaded } from '../../store/app-data/app-data';
 
 export default function CommentForm(): JSX.Element {
-  // eslint-disable-next-line
   const [currentStar, setStar] = useState(0);
-  // eslint-disable-next-line
   const [currentComment, setComment] = useState('');
+  const currentId = useAppSelector(({DATA})=>DATA?.currentOffer?.id);
+
+  const [commentIsValid, setCommentStatus] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const onFormSubmit = (evt:FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (currentId) {
+      dispatch(postCommentAction({comment: currentComment, rating: currentStar, id:currentId}));
+      dispatch(setOfferLoaded(false));
+      setCommentStatus(false);
+    }
+  };
+
+  useEffect(() => {
+    ((currentComment.length > 50) && (currentComment.length < 300) && (currentStar>0))?setCommentStatus(true):setCommentStatus(false);
+  }, [currentComment, currentStar]);
+
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={(evt) => {console.log(evt);}}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={onFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -104,7 +123,7 @@ export default function CommentForm(): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         defaultValue={''}
-        onChange={(evt) => {setComment(evt.target.value);}}
+        onChange={(evt) => setComment(evt.target.value)}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -116,7 +135,7 @@ export default function CommentForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!commentIsValid}
         >
           Submit
         </button>
@@ -124,4 +143,3 @@ export default function CommentForm(): JSX.Element {
     </form>
   );
 }
-

@@ -1,15 +1,7 @@
-import {useState} from 'react';
-import useSortOffers from '../../hooks/useSortOffers';
+import sortOffers from '../../utils/useSortOffers';
 
 import Card from '../../components/card/card';
 import {Offers} from '../../types/offers';
-import {Point} from '../../types/types';
-
-import {useAppDispatch} from '../../hooks/index';
-
-import {CardsDisplayType} from '../../const/const';
-
-import {changehoveredPoint} from '../../store/action';
 
 type cardsListProps = {
   offers: Offers;
@@ -17,29 +9,13 @@ type cardsListProps = {
   sortType: string;
 }
 
-export default function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element {
-  const [currentActiveCard, setActiveCard] = useState<Point | null>(null);
-
-  const dispatch = useAppDispatch();
-  dispatch(changehoveredPoint(currentActiveCard ?? null));
-  useSortOffers(offers,sortType);
-
-  let articleClassName: string;
-  switch (displayType) {
-    case (CardsDisplayType.Index):
-      articleClassName = 'cities__place-card place-card';
-      break;
-    case (CardsDisplayType.Property):
-      articleClassName = 'near-places__card place-card';
-      break;
-  }
-
+function CardsList({offers, displayType, sortType}: cardsListProps): JSX.Element {
+  const sortedOffers = sortOffers(offers,sortType);
   return (
     <>
-      {offers.map((element) => (
-        <article key={element.id} onMouseOver={() => setActiveCard(element.location)} onMouseOut={()=>setActiveCard(null)} className={articleClassName}>
-          <Card displayType={displayType} offer={element}/>
-        </article>),
+      {sortedOffers.map((element) => (<Card displayType={displayType} key={element.id} offer={element}/>),
       )}
     </>);
 }
+
+export default CardsList;

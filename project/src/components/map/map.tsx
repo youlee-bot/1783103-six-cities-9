@@ -1,23 +1,20 @@
-import {useRef, useEffect} from 'react';
-import {useAppSelector} from '../../hooks/index';
+import {useRef, useEffect, memo} from 'react';
 
 import 'leaflet/dist/leaflet.css';
 import leaflet from 'leaflet';
 import useMap from '../../hooks/useMap';
-import {Points, Point} from '../../types/types';
+import {City, Points, Point} from '../../types/types';
 
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const/const'; //, URL_MARKER_CURRENT
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const/const';
 
 type MapProps = {
   points: Points;
+  styleString:React.CSSProperties;
+  city:City;
   hoveredCardPoints: Point|null;
 }
 
-export default function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
-  const currentState = useAppSelector((state) => state);
-
-  const city = currentState.currentCity;
-
+function Map({points, styleString, city, hoveredCardPoints}:MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -52,7 +49,9 @@ export default function Map({points, hoveredCardPoints}:MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, points, city]);
+  }, [map, points, city, hoveredCardPoints, currentCustomIcon, defaultCustomIcon]);
 
-  return <div style={{height: '1000px'}} ref={mapRef}></div>;
+  return <div style={styleString} ref={mapRef}></div>;
 }
+
+export default memo (Map);

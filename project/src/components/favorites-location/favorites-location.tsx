@@ -1,40 +1,21 @@
-import Card from '../../components/card/card';
-import {Offers} from '../../types/offers';
+import { Offers } from '../../types/offers';
+import FavoritesCitySection from '../favorites-city-section/favorites-city-section';
 
-import {CardsDisplayType} from '../../const/const';
-
-type favoritesLocationProps = {
+type FavoriteLocationListProps = {
   offers: Offers;
 }
 
-//ts-lint ignore
-export default function FavoritesLocationList({offers}: favoritesLocationProps): JSX.Element {
-  const cities = new Set();
-  offers.forEach((element) => cities.add(element.city));
-
-
+export default function FavoritesLocationList({offers}:FavoriteLocationListProps): JSX.Element {
+  const currentCities = offers.reduce((Cities: string[], offer) => {
+    if (!Cities.includes(offer.city.name)) {
+      Cities.push(offer.city.name);
+    }
+    return Cities;
+  }, []);
   return (
     <>
       {
-        cities.forEach((city) => (
-          <li className="favorites__locations-items">
-            <div className="favorites__locations locations locations--current">
-              <div className="locations__item">
-                <a className="locations__item-link" href="/#">
-                  <span></span>
-                </a>
-              </div>
-            </div>
-            <div className="favorites__places">
-              {
-                offers.map((element) => {
-                  if (element.city === city) {
-                    return (<Card displayType={CardsDisplayType.Index} key={element.id} offer={element}/>);
-                  }
-                })
-              }
-            </div>
-          </li>))
+        currentCities.map((city) => <FavoritesCitySection key={city} city={city} offers={offers}/>)
       }
     </>);
 }
