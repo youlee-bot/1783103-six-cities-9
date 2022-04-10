@@ -3,9 +3,11 @@ import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {AuthStatus} from '../../const/const';
 import {AppRoute} from '../../const/const';
 import { logoutAction } from '../../store/api-actions';
+import { getUserName } from '../../services/token';
 
 export default function HeaderLogin(): JSX.Element {
   const currentAuthorisationStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+
   const dispatch = useAppDispatch();
   if (currentAuthorisationStatus === AuthStatus.Auth) {
     return (
@@ -15,7 +17,7 @@ export default function HeaderLogin(): JSX.Element {
             <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
               <div className="header__avatar-wrapper user__avatar-wrapper"></div>
               <span className="header__user-name user__name">
-                  Oliver.conner@gmail.com
+                {getUserName()}
               </span>
             </Link>
           </li>

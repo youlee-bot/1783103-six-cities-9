@@ -75,7 +75,7 @@ export interface AppData {
 }
 
 export type UserProcess = {
-  authorizationStatus: AuthStatus
+  authorizationStatus: AuthStatus,
 };
 
 

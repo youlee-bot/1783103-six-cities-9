@@ -5,7 +5,9 @@ import {store} from './store';
 import ErrorMessage from './components/error-message/errorMessage';
 
 import App from './components/app/app';
+import { checkAuthAction } from './store/api-actions';
 
+store.dispatch(checkAuthAction());
 
 ReactDOM.render(
   <React.StrictMode>

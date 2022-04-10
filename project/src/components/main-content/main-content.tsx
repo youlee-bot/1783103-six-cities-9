@@ -16,6 +16,8 @@ type MainContentProps = {
 export default function MainContent({offers}:MainContentProps):JSX.Element {
   const currentCity = useAppSelector(({DATA}) => DATA.currentCity.title);
   const currentSortType = useAppSelector(({DATA}) => DATA.sortType);
+  const city = useAppSelector(({DATA}) => DATA.currentCity);
+  const hoveredCardPoints = useAppSelector(({DATA}) => DATA.hoveredPoint);
 
   const offersToDisplay: Offers = [];
 
@@ -37,11 +39,11 @@ export default function MainContent({offers}:MainContentProps):JSX.Element {
           <b className="places__found">{foundResults} places to stay in {currentCity}</b>
           <SortMenu/>
           <div className="cities__places-list places__list tabs__content">
-            <CardsList displayType={CardsDisplayType.Index} offers={offersToDisplay} sortType={currentSortType}/>
+            {foundResults===0?'No places to stay available':<CardsList displayType={CardsDisplayType.Index} offers={offersToDisplay} sortType={currentSortType}/>}
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"><Map points={points}/></section>
+          <section className="cities__map map">{foundResults>0?<Map styleString={{height: '1000px'}} points={points} city={city} hoveredCardPoints={hoveredCardPoints}/>:''}</section>
         </div>
       </div>
     </div>

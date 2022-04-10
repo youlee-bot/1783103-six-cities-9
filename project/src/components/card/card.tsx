@@ -6,7 +6,7 @@ import {CardsDisplayType, AppRoute, AuthStatus} from '../../const/const';
 import {memo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changehoveredPoint} from '../../store/app-data/app-data';
-import { addToFavoritesAction } from '../../store/api-actions';
+import { addToFavoritesAction, fetchFavoriteOffersAction, fetchOffersAction } from '../../store/api-actions';
 import { redirectToRoute } from '../../store/action';
 import { store } from '../../store';
 
@@ -20,6 +20,7 @@ function Card({offer, displayType}: cardProps): JSX.Element {
   let wrapperClassName = '';
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(({USER})=>USER.authorizationStatus);
+
   let articleClassName: string|undefined;
   switch (displayType) {
     case (CardsDisplayType.Index):
@@ -35,7 +36,7 @@ function Card({offer, displayType}: cardProps): JSX.Element {
     <article className={articleClassName} onMouseOver={(evt) => dispatch(changehoveredPoint(offer.location))} onMouseOut={() => dispatch(changehoveredPoint(null))}>
       <div className={wrapperClassName}>
         <Link to={linkToOffer}>
-          <img className="place-card__image" src="../../../img/apartment-01.jpg" width={260} height={200} alt="apartment"/>
+          <img className="place-card__image" src={offer.previewImage} width={260} height={200} alt="apartment"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -47,6 +48,8 @@ function Card({offer, displayType}: cardProps): JSX.Element {
           <button className="place-card__bookmark-button button" type="button" onClick={()=>{
             if (authStatus === AuthStatus.Auth) {
               dispatch(addToFavoritesAction({status: Number(!offer.isFavorite), id:offer.id}));
+              dispatch(fetchFavoriteOffersAction());
+              dispatch(fetchOffersAction());
             } else {
               store.dispatch(redirectToRoute(AppRoute.Login));
             }
@@ -60,7 +63,7 @@ function Card({offer, displayType}: cardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}/>
+            <span style={{width: `${Math.round(offer.rating)*20}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -74,3 +77,4 @@ function Card({offer, displayType}: cardProps): JSX.Element {
 }
 
 export default memo(Card);
+

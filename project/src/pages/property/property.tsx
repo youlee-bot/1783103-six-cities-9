@@ -7,16 +7,20 @@ import CommentForm from '../../components/comment-form/comment-form';
 import ReviewList from '../../components/review-list/review-list';
 import CardsList from '../../components/cards-list/cards-list';
 import Gallery from '../../components/gallery/gallery';
+import Map from '../../components/map/map';
 
 import {Offers} from '../../types/offers';
 
 import {AppRoute, AuthStatus, CardsDisplayType, SortType} from '../../const/const';
-import {fetchOfferInfoAction, fetchOfferReviewsAction, fetchOfferNearbyAction, addToFavoritesAction} from '../../store/api-actions';
+import {fetchOfferInfoAction, fetchOfferReviewsAction, fetchOfferNearbyAction, addToFavoritesAction, fetchFavoriteOffersAction} from '../../store/api-actions';
 
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {store} from '../../store';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { redirectToRoute } from '../../store/action';
+import { setDataLoaded } from '../../store/app-data/app-data';
+import { Points } from '../../types/types';
+import { CITIES } from '../../const/city';
 
 
 type cardsListProps = {
@@ -27,6 +31,16 @@ export default function Property({offers}: cardsListProps): JSX.Element {
   const dispatch = useAppDispatch();
   const {reviews, offerNearby, currentOffer, isOfferLoaded} = useAppSelector(({DATA}) => DATA);
   const authStatus = useAppSelector(({USER}) => USER.authorizationStatus);
+
+  const points: Points = [];
+
+  offerNearby?.forEach((element) => {
+    points.push(element.location);
+    if (currentOffer) {
+      points.push(currentOffer.location);
+    }
+  });
+  const getCityInfo = (cityToSearch:string|undefined)  => CITIES.filter((city)=>city.title === cityToSearch)[0];
 
   useEffect(() => {
     if (!isOfferLoaded) {
@@ -63,6 +77,8 @@ export default function Property({offers}: cardsListProps): JSX.Element {
                   <button className="property__bookmark-button button" type="button" onClick={()=>{
                     if (authStatus === AuthStatus.Auth) {
                       dispatch(addToFavoritesAction({status: Number(!currentOffer.isFavorite), id:currentOffer.id}));
+                      dispatch(fetchFavoriteOffersAction());
+                      dispatch(setDataLoaded(false));
                     } else {
                       store.dispatch(redirectToRoute(AppRoute.Login));
                     }
@@ -76,20 +92,20 @@ export default function Property({offers}: cardsListProps): JSX.Element {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: '80%'}}/>
+                    <span style={{width: `${Math.round(currentOffer.rating)*20}%`}}/>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{currentOffer.rating}</span>
                 </div>
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
-                    Apartment
+                    {currentOffer.type}
                   </li>
                   <li className="property__feature property__feature--bedrooms">
-                    3 Bedrooms
+                    {currentOffer.bedrooms} Bedrooms
                   </li>
                   <li className="property__feature property__feature--adults">
-                    Max 4 adults
+                    Max {currentOffer.maxAdults} adults
                   </li>
                 </ul>
                 <div className="property__price">
@@ -132,7 +148,9 @@ export default function Property({offers}: cardsListProps): JSX.Element {
                 </section>
               </div>
             </div>
-            <section className="property__map map"/>
+            <section className="property__map map">
+              <Map points={points} styleString={{width: '100%', height: '579px'}} city={offerNearby[0].city.name?getCityInfo(offerNearby[0].city.name):getCityInfo(currentOffer.city.name)} hoveredCardPoints={currentOffer.location}/>
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">

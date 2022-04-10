@@ -15,11 +15,8 @@ export default function Favorites(): JSX.Element {
   const isDataLoaded = useAppSelector(({DATA}) => DATA.isfavoriteOffersLoaded);
 
   useEffect(() => {
-    if (!isDataLoaded) {
-      store.dispatch(fetchFavoriteOffersAction());
-      console.log(favoriteOffers);
-    }
-  }, [isDataLoaded]);
+    store.dispatch(fetchFavoriteOffersAction());
+  }, []);
 
   if (!isDataLoaded) {
     return (
