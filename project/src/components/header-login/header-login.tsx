@@ -15,7 +15,7 @@ export default function HeaderLogin(): JSX.Element {
         <ul className="header__nav-list">
           <li className="header__nav-item user">
             <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-              <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+              <span className="header__avatar-wrapper user__avatar-wrapper"></span>
               <span className="header__user-name user__name">
                 {getUserName()}
               </span>
@@ -38,11 +38,11 @@ export default function HeaderLogin(): JSX.Element {
     <nav className="header__nav">
       <ul className="header__nav-list">
         <li className="header__nav-item user">
-          <Link className="header__nav-link header__nav-link--profile" to="#">
+          <div className="header__nav-link header__nav-link--profile">
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
             <Link to={AppRoute.Login}><span className="header__login">Sign in</span></Link>
-          </Link>
+          </div>
         </li>
       </ul>
     </nav>

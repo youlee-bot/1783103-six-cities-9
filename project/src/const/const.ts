@@ -23,7 +23,7 @@ export enum SortType {
 
 export enum CardsDisplayType {
   Index = 'INDEX',
-  Property = 'Property',
+  Property = 'PROPERTY',
 }
 
 export const START_CITY = 'Paris';
@@ -44,13 +44,13 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const REQUEST_TIMEOUT = 5000;
 
-export enum HTTP_CODE {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+export enum HttpCode {
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
 }
 
 export enum NameSpace {
-  data = 'DATA',
-  user = 'USER',
+  Data = 'DATA',
+  User = 'USER',
 }

@@ -6,11 +6,11 @@ type FavoriteLocationListProps = {
 }
 
 export default function FavoritesLocationList({offers}:FavoriteLocationListProps): JSX.Element {
-  const currentCities = offers.reduce((Cities: string[], offer) => {
-    if (!Cities.includes(offer.city.name)) {
-      Cities.push(offer.city.name);
+  const currentCities = offers.reduce((сities: string[], offer) => {
+    if (!сities.includes(offer.city.name)) {
+      сities.push(offer.city.name);
     }
-    return Cities;
+    return сities;
   }, []);
   return (
     <>

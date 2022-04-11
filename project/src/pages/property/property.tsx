@@ -18,7 +18,6 @@ import {useAppSelector, useAppDispatch} from '../../hooks';
 import {store} from '../../store';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import { redirectToRoute } from '../../store/action';
-import { setDataLoaded } from '../../store/app-data/app-data';
 import { Points } from '../../types/types';
 import { CITIES } from '../../const/city';
 
@@ -43,12 +42,10 @@ export default function Property({offers}: cardsListProps): JSX.Element {
   const getCityInfo = (cityToSearch:string|undefined)  => CITIES.filter((city)=>city.title === cityToSearch)[0];
 
   useEffect(() => {
-    if (!isOfferLoaded) {
-      store.dispatch(fetchOfferReviewsAction(Number(id)));
-      store.dispatch(fetchOfferNearbyAction(Number(id)));
-      store.dispatch(fetchOfferInfoAction(Number(id)));
-    }
-  }, [dispatch, id, isOfferLoaded]);
+    store.dispatch(fetchOfferReviewsAction(Number(id)));
+    store.dispatch(fetchOfferNearbyAction(Number(id)));
+    store.dispatch(fetchOfferInfoAction(Number(id)));
+  }, [dispatch, id]);
 
   if (!isOfferLoaded) {
     return (
@@ -74,11 +71,11 @@ export default function Property({offers}: cardsListProps): JSX.Element {
                   <h1 className="property__name">
                     {currentOffer.title}
                   </h1>
-                  <button className="property__bookmark-button button" type="button" onClick={()=>{
+                  <button className={`property__bookmark-button ${currentOffer.isFavorite?'property__bookmark-button--active':''} button`} type="button" onClick={()=>{
                     if (authStatus === AuthStatus.Auth) {
                       dispatch(addToFavoritesAction({status: Number(!currentOffer.isFavorite), id:currentOffer.id}));
                       dispatch(fetchFavoriteOffersAction());
-                      dispatch(setDataLoaded(false));
+                      dispatch(fetchOfferInfoAction(Number(id)));
                     } else {
                       store.dispatch(redirectToRoute(AppRoute.Login));
                     }
@@ -87,7 +84,7 @@ export default function Property({offers}: cardsListProps): JSX.Element {
                     <svg className="property__bookmark-icon" width={31} height={33}>
                       <use xlinkHref="#icon-bookmark"/>
                     </svg>
-                    <span className="visually-hidden">To bookmarks</span>
+                    <span className="visually-hidden">${currentOffer.isFavorite?'In bookmarks':'To bookmarks'}</span>
                   </button>
                 </div>
                 <div className="property__rating rating">
@@ -144,7 +141,7 @@ export default function Property({offers}: cardsListProps): JSX.Element {
                     Reviews · <span className="reviews__amount">{reviews ? reviews.length : '0'}</span>
                   </h2>
                   {reviews ? (<ReviewList reviews={reviews}/>) : ''}
-                  <CommentForm/>
+                  {((authStatus === AuthStatus.Auth)&&(id)) ? <CommentForm id={Number(id)}/>:''}
                 </section>
               </div>
             </div>
