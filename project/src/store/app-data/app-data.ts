@@ -17,10 +17,11 @@ const initialState: AppData = {
   isDataLoaded: false,
   isOfferLoaded: false,
   isfavoriteOffersLoaded: false,
+  isCommentSent: true,
 };
 
 export const appDataProcess = createSlice({
-  name: NameSpace.data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     changeCity: (state, action) => {
@@ -50,6 +51,9 @@ export const appDataProcess = createSlice({
     setDataLoaded: (state, action) => {
       state.isDataLoaded = action.payload;
     },
+    setCommentSent: (state, action) => {
+      state.isCommentSent = action.payload;
+    },
     setOfferLoaded: (state, action) => {
       state.isOfferLoaded = action.payload;
     },
@@ -75,4 +79,5 @@ export const {
   setOfferLoaded,
   fetchFavoriteOffers,
   setIsfavoriteOffersLoaded,
+  setCommentSent,
 } = appDataProcess.actions;

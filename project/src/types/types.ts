@@ -72,6 +72,7 @@ export interface AppData {
   isDataLoaded: boolean,
   isOfferLoaded: boolean,
   isfavoriteOffersLoaded: boolean,
+  isCommentSent: boolean,
 }
 
 export type UserProcess = {

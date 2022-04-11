@@ -8,7 +8,7 @@ import {
   setError,
   fetchReviews,
   fetchOfferNearby,
-  setOfferLoaded,  fetchFavoriteOffers, setIsfavoriteOffersLoaded, setDataLoaded
+  setOfferLoaded,  fetchFavoriteOffers, setIsfavoriteOffersLoaded, setDataLoaded, setCommentSent
 } from '../store/app-data/app-data';
 import {requireAuthorization} from '../store/user-process/user-process';
 import {redirectToRoute} from '../store/action';
@@ -132,7 +132,9 @@ export const postCommentAction = createAsyncThunk(
   'data/postComment',
   async ({comment,rating, id}: PostCommentData) => {
     try {
+      store.dispatch(setCommentSent(false));
       await api.post<UserData>(`${APIRoute.Comments}/${id}`, {comment: comment, rating: rating});
+      store.dispatch(setCommentSent(true));
     } catch (error) {
       errorHandle(error);
     }
@@ -147,3 +149,5 @@ export const addToFavoritesAction = createAsyncThunk(
       errorHandle(error);
     }
   });
+
+

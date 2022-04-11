@@ -2,15 +2,12 @@ import FavoritesLocationList from '../../components/favorites-location/favorites
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import {useAppSelector} from '../../hooks';
-import {AuthStatus, AppRoute} from '../../const/const';
-import {Navigate} from 'react-router-dom';
 import {useEffect} from 'react';
 import {store} from '../../store';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import {fetchFavoriteOffersAction} from '../../store/api-actions';
 
 export default function Favorites(): JSX.Element {
-  const authStatus = useAppSelector(({USER}) => USER.authorizationStatus);
   const favoriteOffers = useAppSelector(({DATA}) => DATA.favoriteOffers);
   const isDataLoaded = useAppSelector(({DATA}) => DATA.isfavoriteOffersLoaded);
 
@@ -21,12 +18,6 @@ export default function Favorites(): JSX.Element {
   if (!isDataLoaded) {
     return (
       <LoadingScreen/>
-    );
-  }
-
-  if (authStatus !== AuthStatus.Auth) {
-    return (
-      <Navigate to={AppRoute.Login}/>
     );
   }
 

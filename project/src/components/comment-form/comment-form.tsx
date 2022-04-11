@@ -1,12 +1,16 @@
 import {FormEvent, useEffect, useState} from 'react';
-import {postCommentAction} from '../../store/api-actions';
+import {fetchOfferInfoAction, fetchOfferReviewsAction, postCommentAction} from '../../store/api-actions';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
-import { setOfferLoaded } from '../../store/app-data/app-data';
 
-export default function CommentForm(): JSX.Element {
+type CommentFormProps = {
+  id: number;
+}
+
+export default function CommentForm({id}:CommentFormProps): JSX.Element {
   const [currentStar, setStar] = useState(0);
   const [currentComment, setComment] = useState('');
   const currentId = useAppSelector(({DATA})=>DATA?.currentOffer?.id);
+  const {isCommentSent} = useAppSelector(({DATA})=>DATA);
 
   const [commentIsValid, setCommentStatus] = useState(false);
 
@@ -15,13 +19,14 @@ export default function CommentForm(): JSX.Element {
     evt.preventDefault();
     if (currentId) {
       dispatch(postCommentAction({comment: currentComment, rating: currentStar, id:currentId}));
-      dispatch(setOfferLoaded(false));
+      dispatch(fetchOfferReviewsAction(Number(id)));
+      dispatch(fetchOfferInfoAction(Number(id)));
       setCommentStatus(false);
     }
   };
 
   useEffect(() => {
-    ((currentComment.length > 50) && (currentComment.length < 300) && (currentStar>0))?setCommentStatus(true):setCommentStatus(false);
+    ((currentComment.length > 50) && (currentComment.length < 300) && (currentStar>0) && (isCommentSent))?setCommentStatus(true):setCommentStatus(false);
   }, [currentComment, currentStar]);
 
 

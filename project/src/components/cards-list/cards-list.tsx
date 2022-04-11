@@ -1,4 +1,4 @@
-import sortOffers from '../../utils/useSortOffers';
+import sortOffers from '../../utils/sort-offers';
 
 import Card from '../../components/card/card';
 import {Offers} from '../../types/offers';
